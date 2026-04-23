@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Nosif Pastry｜菜單產生器</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    background: #F8F5F1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 680px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #1C1814;
+    margin-bottom: 0.3rem;
+  }
+  .sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: #9A948C;
+    margin-bottom: 2rem;
+  }
+  .section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #E0DAD2;
+  }
+  .section:last-of-type { border-bottom: none; }
+  .section-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: #9A948C;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .form-row {
+    margin-bottom: 0.8rem;
+  }
+  label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: #5C5650;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  input[type="date"], input[type="text"], textarea {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    width: 100%;
+    background: #FAFAF8;
+    color: #1C1814;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input:focus, textarea:focus { border-color: #002395; }
+  textarea { resize: vertical; min-height: 60px; }
+
+  /* 類別區塊 */
+  .category-block {
+    border: 1px solid #E0DAD2;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #FAFAF8;
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+  .category-name-input {
+    flex: 1;
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1C1814;
+    outline: none;
+    font-weight: 400;
+  }
+  .category-name-input:focus { border-color: #002395; }
+  .del-cat-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .del-cat-btn:hover { color: #ED2939; }
+
+  .item-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+    align-items: center;
+  }
+  .input-name  { flex: 2; }
+  .input-price { flex: 1; }
+  .item-row input {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.82rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1C1814;
+    outline: none;
+    width: 100%;
+  }
+  .item-row input:focus { border-color: #002395; }
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .remove-btn:hover { color: #ED2939; }
+
+  .item-desc-row {
+    margin-left: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .input-desc {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.75rem;
+    font-family: inherit;
+    background: #fff;
+    color: #9A948C;
+    outline: none;
+    width: calc(100% - 2rem);
+  }
+  .input-desc:focus { border-color: #002395; }
+
+  .add-item-btn {
+    background: none;
+    border: 1px dashed #C0B8B0;
+    color: #9A948C;
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 0.3rem;
+    transition: border-color 0.15s;
+  }
+  .add-item-btn:hover { border-color: #B8956A; color: #B8956A; }
+
+  .add-cat-btn {
+    background: none;
+    border: 1px dashed #B8956A;
+    color: #B8956A;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    margin-bottom: 1.2rem;
+    transition: background 0.15s;
+  }
+  .add-cat-btn:hover { background: #fdf8f3; }
+
+  .generate-btn {
+    background: #002395;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.18s;
+    font-family: inherit;
+  }
+  .generate-btn:hover { background: #001a70; }
+  .generate-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+  .status {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    min-height: 1.4rem;
+    color: #5C5650;
+  }
+  .status.ok   { color: #2a7a4f; }
+  .status.err  { color: #ED2939; }
+
+  .download-btn {
+    display: none;
+    margin-top: 1rem;
+    background: none;
+    border: 1px solid #002395;
+    color: #002395;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .download-btn:hover { background: #f0f3ff; }
+
+  .tricolor {
+    display: flex;
+    height: 3px;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 1.8rem;
+  }
+  .tricolor div { flex: 1; }
+  .t-blue  { background: #002395; }
+  .t-white { background: #E0DAD2; }
+  .t-red   { background: #ED2939; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="tricolor">
+    <div class="t-blue"></div>
+    <div class="t-white"></div>
+    <div class="t-red"></div>
+  </div>
+  <h1>本週菜單產生器</h1>
+  <p class="sub">Nosif Pastry · 填好按「產生圖片」即可</p>
+
+  <!-- 品牌設定 -->
+  <div class="section">
+    <p class="section-title">品牌設定</p>
+    <div class="form-row">
+      <label>品牌名稱</label>
+      <input type="text" id="brand" placeholder="例：Nosif Pastry" value="Nosif Pastry" />
+    </div>
+    <div class="form-row">
+      <label>菜單標題</label>
+      <input type="text" id="title" placeholder="例：本週菜單" value="本週菜單" />
+    </div>
+    <div class="form-row">
+      <label>副標</label>
+      <input type="text" id="subtitle" placeholder="例：每週限量　售完為止" value="每週限量　售完為止" />
+    </div>
+    <div class="form-row">
+      <label>日期</label>
+      <input type="date" id="date" />
+    </div>
+    <div class="form-row">
+      <label>頁尾聯絡資訊</label>
+      <textarea id="footer" placeholder="預訂請私訊 Line @nosifpastry 或 Facebook Nosif Pastry">預訂請私訊 Line @loy7576g 或 Facebook Nosif Pastry</textarea>
+    </div>
+  </div>
+
+  <!-- 類別與品項 -->
+  <div class="section">
+    <p class="section-title">菜單類別與品項</p>
+    <div id="categories-container"></div>
+    <button class="add-cat-btn" onclick="addCategory()">＋ 新增類別</button>
+  </div>
+
+  <button class="generate-btn" onclick="generate()">產生圖片</button>
+  <div class="status" id="status"></div>
+  <button class="download-btn" id="download-btn" onclick="download()">下載圖片</button>
+</div>
+
+<script>
+  const defaultCategories = [
+    {
+      name: '鹹派',
+      items: [
+        { name: '鹹派雞肉', price: 'NT$ 125', desc: '' },
+        { name: '鹹派培根', price: 'NT$ 125', desc: '' }
+      ]
+    },
+    {
+      name: '可頌',
+      items: [
+        { name: '原味可頌', price: 'NT$ 70', desc: '' },
+        { name: '巧克力可頌', price: 'NT$ 80', desc: '' },
+        { name: '芋泥可頌', price: 'NT$ 75', desc: '' }
+      ]
+    },
+    {
+      name: '麵包',
+      items: [
+        { name: '法棍', price: 'NT$ 95', desc: '' }
+      ]
+    }
+  ];
+
+  document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+  function addCategory(name = '', items = [{ name: '', price: '', desc: '' }, { name: '', price: '', desc: '' }]) {
+    const container = document.getElementById('categories-container');
+    const block = document.createElement('div');
+    block.className = 'category-block';
+
+    const itemsHtml = items.map(item => makeItemRow(item.name || '', item.price || '', item.desc || '')).join('');
+    block.innerHTML = `
+      <div class="category-header">
+        <input class="category-name-input" type="text" placeholder="類別名稱（例：鹹派、可頌）" value="${name}" />
+        <button class="del-cat-btn" onclick="this.closest('.category-block').remove()">×</button>
+      </div>
+      <div class="items-list">${itemsHtml}</div>
+      <button class="add-item-btn" onclick="addItemToBlock(this)">＋ 新增品項</button>
+    `;
+    container.appendChild(block);
+  }
+
+  function makeItemRow(name = '', price = '', desc = '') {
+    return `<div class="item-row">
+      <input type="text" class="input-name"  placeholder="品項名稱" value="${name}" />
+      <input type="text" class="input-price" placeholder="價格" value="${price}" />
+      <button class="remove-btn" onclick="removeItem(this)">×</button>
+    </div>
+    <div class="item-desc-row">
+      <input type="text" class="input-desc" placeholder="描述（可選）" value="${desc}" />
+    </div>`;
+  }
+
+  function addItemToBlock(btn) {
+    const list = btn.previousElementSibling;
+    list.insertAdjacentHTML('beforeend', makeItemRow());
+  }
+
+  function removeItem(btn) {
+    btn.closest('.item-row').remove();
+    btn.closest('.item-row').nextElementSibling?.remove();
+  }
+
+  defaultCategories.forEach(cat => addCategory(cat.name, cat.items));
+
+  async function generate() {
+    const btn = document.querySelector('.generate-btn');
+    const status = document.getElementById('status');
+    const dlBtn = document.getElementById('download-btn');
+
+    const catBlocks = document.querySelectorAll('.category-block');
+    const categories = [];
+    catBlocks.forEach(block => {
+      const catName = block.querySelector('.category-name-input').value.trim();
+      const rows = block.querySelectorAll('.item-row');
+      const items = [];
+      rows.forEach((row, idx) => {
+        const n = row.querySelector('.input-name').value.trim();
+        const p = row.querySelector('.input-price').value.trim();
+        const d = row.nextElementSibling?.querySelector('.input-desc')?.value.trim() || '';
+        if (n && p) items.push({ name: n, price: p, desc: d });
+      });
+      if (items.length > 0) categories.push({ name: catName || '其他', items });
+    });
+
+    if (categories.length === 0) {
+      status.textContent = '請至少輸入一個品項';
+      status.className = 'status err';
+      return;
+    }
+
+    const brand = document.getElementById('brand').value.trim() || 'Nosif Pastry';
+    const title = document.getElementById('title').value.trim() || '本週菜單';
+    const subtitle = document.getElementById('subtitle').value.trim();
+    const footer = document.getElementById('footer').value.trim();
+    const dateVal = document.getElementById('date').value;
+    const date = dateVal.replace(/-/g, '.');
+
+    btn.disabled = true;
+    status.textContent = '產生中...';
+    status.className = 'status';
+    dlBtn.style.display = 'none';
+
+    try {
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories, date, brand, title, subtitle, footer })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        status.textContent = '✅ 圖片產生成功！';
+        status.className = 'status ok';
+        dlBtn.style.display = 'block';
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (e) {
+      status.textContent = '❌ 發生錯誤：' + e.message;
+      status.className = 'status err';
+    }
+    btn.disabled = false;
+  }
+
+  function download() {
+    window.location.href = '/download';
+  }
+</script>
+</body>
+</html>

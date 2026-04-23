@@ -1,0 +1,18 @@
+{
+  "name": "claude-practice",
+  "version": "1.0.0",
+  "description": "練習使用 Claude Code 建立的純前端專案，所有頁面皆為單一 HTML 檔案，用瀏覽器直接開啟即可使用。",
+  "main": "index.js",
+  "scripts": {
+    "start": "node weekly_menu_server.js",
+    "dev": "node weekly_menu_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer": "^24.42.0"
+  }
+}

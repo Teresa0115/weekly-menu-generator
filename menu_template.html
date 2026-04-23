@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: auto;
+    min-height: 630px;
+    background: #FFFFFF;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+  }
+  .card {
+    width: 1000px;
+  }
+  .tricolor {
+    display: flex;
+    height: 4px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .tricolor-blue  { flex: 1; background: #002395; }
+  .tricolor-white { flex: 1; background: #EDEDED; }
+  .tricolor-red   { flex: 1; background: #ED2939; }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #002395;
+    letter-spacing: 0.14em;
+  }
+  .date {
+    font-size: 14px;
+    color: #9A948C;
+    letter-spacing: 0.1em;
+  }
+  .rule { border: none; border-top: 1px solid #E8E8E8; margin-bottom: 20px; }
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 64px;
+    font-weight: 400;
+    color: #1C1814;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: #9A948C;
+    margin-bottom: 18px;
+  }
+  .accent-rule {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, #002395, #ED2939);
+    margin-bottom: 20px;
+    border-radius: 1px;
+  }
+
+  .category-block {
+    margin-bottom: 28px;
+  }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 400;
+    color: #002395;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #002395;
+  }
+
+  .menu-list { list-style: none; }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    padding: 8px 0 2px 0;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .item-name {
+    font-size: 20px;
+    color: #1C1814;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .item-dots {
+    flex: 1;
+    margin: 0 14px;
+    border-bottom: 1px dotted #E0E0E0;
+    position: relative;
+    top: -3px;
+  }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #002395;
+    flex-shrink: 0;
+  }
+  .menu-desc {
+    font-size: 11px;
+    color: #9A948C;
+    letter-spacing: 0.04em;
+    padding: 2px 0 6px 0;
+    border-bottom: 1px solid #F0F0F0;
+    list-style: none;
+  }
+
+  .footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: #9A948C;
+    border-top: 1px solid #F0F0F0;
+    padding-top: 14px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tricolor">
+    <div class="tricolor-blue"></div>
+    <div class="tricolor-white"></div>
+    <div class="tricolor-red"></div>
+  </div>
+  <div class="top">
+    <span class="brand" id="brand">Nosif Pastry</span>
+    <span class="date" id="date"></span>
+  </div>
+  <hr class="rule">
+  <div class="title" id="title">本週菜單</div>
+  <div class="subtitle" id="subtitle">每週限量　售完為止</div>
+  <hr class="accent-rule">
+  <div id="categories-container"></div>
+  <div class="footer" id="footer"></div>
+</div>
+<script>
+  const CONFIG = window.__CONFIG__ || {};
+  const CATEGORIES = window.__CATEGORIES__ || [];
+
+  document.getElementById('brand').textContent = CONFIG.brand || 'Nosif Pastry';
+  document.getElementById('date').textContent = CONFIG.date || '';
+  document.getElementById('title').textContent = CONFIG.title || '本週菜單';
+  document.getElementById('subtitle').textContent = CONFIG.subtitle || '';
+  document.getElementById('footer').textContent = CONFIG.footer || '';
+
+  const container = document.getElementById('categories-container');
+  CATEGORIES.forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+
+    const itemsHtml = cat.items.map(item => {
+      const name = item.name || item[0] || '';
+      const price = item.price || item[1] || '';
+      const desc = item.desc || item[2] || '';
+      return `
+        <li class="menu-item">
+          <span class="item-name">${name}</span>
+          <span class="item-dots"></span>
+          <span class="item-price">${price}</span>
+        </li>
+        ${desc ? `<li class="menu-desc">${desc}</li>` : ''}
+      `;
+    }).join('');
+
+    block.innerHTML = `
+      <div class="category-name">${cat.name}</div>
+      <ul class="menu-list">${itemsHtml}</ul>`;
+    container.appendChild(block);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: var(--bg, #FFFFFF);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card { width: 1000px; }
+  .tricolor {
+    display: flex;
+    height: 4px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .t1 { flex: 1; background: var(--c1, #002395); }
+  .t2 { flex: 1; background: var(--c2, #EDEDED); }
+  .t3 { flex: 1; background: var(--c3, #ED2939); }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--accent, #002395);
+    letter-spacing: 0.14em;
+  }
+  .date { font-size: 14px; color: #9A948C; letter-spacing: 0.1em; }
+  .rule { border: none; border-top: 1px solid #E8E8E8; margin-bottom: 20px; }
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 64px;
+    font-weight: 400;
+    color: #1C1814;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: #9A948C;
+    margin-bottom: 18px;
+  }
+  .accent-rule {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, var(--c1, #002395), var(--c3, #ED2939));
+    margin-bottom: 20px;
+    border-radius: 1px;
+  }
+  .menu-list { list-style: none; }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .menu-item:first-child { border-top: 1px solid #F0F0F0; }
+  .item-name {
+    font-size: 22px;
+    color: #1C1814;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .item-dots {
+    flex: 1;
+    margin: 0 16px;
+    border-bottom: 1px dotted #E0E0E0;
+    position: relative;
+    top: -4px;
+  }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--accent, #002395);
+    flex-shrink: 0;
+  }
+  .footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: #9A948C;
+  }
+</style>
+<script>
+  window.__CONFIG__ = {"brand":"妮可早餐","title":"本週菜單","subtitle":"每週限量　售完為止","footer":"","date":"2026.04.23","c1":"#c45a6a","c2":"#F5E8EA","c3":"#e8a0aa","accent":"#c45a6a","bg":"#FFFAFA"};
+  window.__ITEMS__  = [["奶茶","100"],["漢堡","120"],["牛奶","300"]];
+</script></head>
+<body>
+<div class="card">
+  <div class="tricolor"><div class="t1"></div><div class="t2"></div><div class="t3"></div></div>
+  <div class="top">
+    <span class="brand" id="brand-name"></span>
+    <span class="date" id="date"></span>
+  </div>
+  <hr class="rule">
+  <div class="title" id="menu-title">本週菜單</div>
+  <div class="subtitle" id="menu-subtitle">每週限量　售完為止</div>
+  <div class="accent-rule"></div>
+  <ul class="menu-list" id="menu-list"></ul>
+  <div class="footer" id="footer"></div>
+</div>
+<script>
+  // 由產生器注入
+  const CONFIG = window.__CONFIG__ || {};
+  const ITEMS  = window.__ITEMS__  || [];
+
+  const root = document.documentElement;
+  if (CONFIG.c1) root.style.setProperty('--c1', CONFIG.c1);
+  if (CONFIG.c2) root.style.setProperty('--c2', CONFIG.c2);
+  if (CONFIG.c3) root.style.setProperty('--c3', CONFIG.c3);
+  if (CONFIG.accent) root.style.setProperty('--accent', CONFIG.accent);
+  if (CONFIG.bg) root.style.setProperty('--bg', CONFIG.bg);
+
+  document.getElementById('brand-name').textContent  = CONFIG.brand    || '我的店';
+  document.getElementById('date').textContent        = CONFIG.date     || '';
+  document.getElementById('menu-title').textContent  = CONFIG.title    || '本週菜單';
+  document.getElementById('menu-subtitle').textContent = CONFIG.subtitle || '每週限量　售完為止';
+  document.getElementById('footer').textContent      = CONFIG.footer   || '';
+
+  const list = document.getElementById('menu-list');
+  ITEMS.forEach(([name, price]) => {
+    list.innerHTML += `
+      <li class="menu-item">
+        <span class="item-name">${name}</span>
+        <span class="item-dots"></span>
+        <span class="item-price">${price}</span>
+      </li>`;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>簡易記帳工具</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f0f4f8; color: #1f2937; }
+
+    header {
+      background: #3b82f6;
+      color: white;
+      padding: 16px 24px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: visible;
+    }
+
+    .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+
+    section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    section h2 { font-size: 1rem; font-weight: bold; color: #374151; margin-bottom: 16px; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; }
+
+    /* Form */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+    .form-grid label { font-size: 0.78rem; color: #6b7280; display: block; margin-bottom: 4px; }
+    .form-grid input, .form-grid select, .form-grid textarea {
+      width: 100%; padding: 7px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem;
+    }
+    .form-grid input:focus, .form-grid select:focus { outline: none; border-color: #3b82f6; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-actions { margin-top: 12px; display: flex; gap: 8px; }
+    button.btn-primary { background: #3b82f6; color: white; border: none; border-radius: 6px; padding: 8px 20px; cursor: pointer; font-size: 0.9rem; }
+    button.btn-primary:hover { background: #2563eb; }
+    button.btn-danger  { background: #ef4444; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; }
+    button.btn-edit    { background: #f59e0b; color: white; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; }
+    button.btn-cancel  { background: #6b7280; color: white; border: none; border-radius: 6px; padding: 8px 20px; cursor: pointer; font-size: 0.9rem; }
+    button.btn-export  { background: #10b981; color: white; border: none; border-radius: 6px; padding: 6px 16px; cursor: pointer; font-size: 0.85rem; }
+    button.btn-export:hover { background: #059669; }
+    .editing-banner    { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; font-size: 0.85rem; color: #92400e; display: none; }
+
+    /* Filter */
+    .filter-bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .filter-bar label { font-size: 0.85rem; color: #6b7280; }
+    .filter-bar input, .filter-bar select { padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.85rem; }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead th { background: #f9fafb; text-align: left; padding: 8px 10px; border-bottom: 1px solid #e5e7eb; color: #6b7280; white-space: nowrap; }
+    tbody td { padding: 8px 10px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+    tbody tr:hover { background: #f9fafb; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; }
+    .badge-income  { background: #dcfce7; color: #16a34a; }
+    .badge-cost    { background: #fef9c3; color: #ca8a04; }
+    .badge-expense { background: #fee2e2; color: #dc2626; }
+    .num { text-align: right; }
+
+    /* Summary cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+    .card { background: #f9fafb; border-radius: 8px; padding: 14px 18px; }
+    .card .label { font-size: 0.78rem; color: #6b7280; margin-bottom: 6px; }
+    .card .value { font-size: 1.2rem; font-weight: bold; color: #1f2937; }
+    .card.green .value { color: #16a34a; }
+    .card.red .value   { color: #dc2626; }
+    .card.blue .value  { color: #3b82f6; }
+
+    /* P&L table */
+    .pnl-table { width: 100%; max-width: 480px; }
+    .pnl-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f3f4f6; font-size: 0.95rem; }
+    .pnl-row:last-child { border-bottom: none; }
+    .pnl-row.subtotal { font-weight: bold; background: #f9fafb; margin: 4px -8px; padding: 10px 8px; border-radius: 6px; border-bottom: none; }
+    .pnl-row.total    { font-weight: bold; font-size: 1.05rem; border-top: 2px solid #e5e7eb; padding-top: 14px; margin-top: 4px; border-bottom: none; }
+    .pnl-row .pnl-label { color: #374151; }
+    .pnl-row .pnl-label.indent { padding-left: 16px; color: #6b7280; font-size: 0.88rem; }
+    .pnl-row .pnl-val { font-weight: 600; }
+    .pnl-row .pnl-val.pos { color: #16a34a; }
+    .pnl-row .pnl-val.neg { color: #dc2626; }
+    .pnl-row .pnl-val.blue { color: #3b82f6; }
+    .pnl-divider { border: none; border-top: 1px dashed #e5e7eb; margin: 4px 0; }
+
+    /* Tax summary */
+    .tax-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f3f4f6; font-size: 0.9rem; }
+    .tax-row:last-child { border-bottom: none; font-weight: bold; }
+    .tax-due  { color: #dc2626; }
+    .tax-over { color: #16a34a; }
+
+    .empty { text-align: center; color: #9ca3af; padding: 24px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<header>簡易記帳 ＆ 損益表工具</header>
+
+<div class="container">
+
+  <!-- 新增紀錄 -->
+  <section>
+    <h2 id="form-title">新增紀錄</h2>
+    <div class="editing-banner" id="editing-banner">正在編輯紀錄，修改完成後按「儲存修改」</div>
+    <div class="form-grid">
+      <div>
+        <label>日期</label>
+        <input type="date" id="f-date">
+      </div>
+      <div>
+        <label>類型</label>
+        <select id="f-type">
+          <option value="income">income（收入）</option>
+          <option value="cost">cost（成本）</option>
+          <option value="expense">expense（費用）</option>
+        </select>
+      </div>
+      <div>
+        <label>分類</label>
+        <select id="f-category"></select>
+      </div>
+      <div>
+        <label>項目名稱</label>
+        <input type="text" id="f-name" placeholder="例：軟體授權費">
+      </div>
+      <div>
+        <label>未稅金額</label>
+        <input type="number" id="f-ex-tax" placeholder="0" min="0" step="1">
+      </div>
+      <div>
+        <label>稅額</label>
+        <input type="number" id="f-tax" placeholder="0" min="0" step="1">
+      </div>
+      <div>
+        <label>含稅金額</label>
+        <input type="number" id="f-incl-tax" placeholder="自動計算" readonly style="background:#f3f4f6; color:#6b7280; cursor:not-allowed;">
+      </div>
+      <div id="f-deductible-wrap">
+        <label>是否可扣抵</label>
+        <select id="f-deductible">
+          <option value="true">是</option>
+          <option value="false">否</option>
+        </select>
+      </div>
+      <div class="full">
+        <label>備註</label>
+        <input type="text" id="f-note" placeholder="選填">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" id="submit-btn" onclick="submitForm()">新增</button>
+      <button class="btn-cancel" id="cancel-btn" onclick="cancelEdit()" style="display:none;">取消</button>
+    </div>
+  </section>
+
+  <!-- 篩選 -->
+  <section>
+    <h2>篩選 ＆ 紀錄列表</h2>
+    <div class="filter-bar" style="margin-bottom:16px;">
+      <label>月份篩選</label>
+      <input type="month" id="filter-month" onchange="render()">
+      <label>類型</label>
+      <select id="filter-type" onchange="render()">
+        <option value="">全部</option>
+        <option value="income">income</option>
+        <option value="cost">cost</option>
+        <option value="expense">expense</option>
+      </select>
+      <button class="btn-primary" onclick="clearFilter()">清除篩選</button>
+      <button class="btn-export" onclick="exportCSV()">匯出 CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>類型</th>
+            <th>分類</th>
+            <th>項目</th>
+            <th class="num">未稅金額</th>
+            <th class="num">稅額</th>
+            <th class="num">含稅金額</th>
+            <th>可扣抵</th>
+            <th>備註</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="records-body"></tbody>
+      </table>
+      <div id="records-empty" class="empty" style="display:none;">尚無符合紀錄</div>
+    </div>
+  </section>
+
+  <!-- 報表區 -->
+  <section>
+    <div id="report-header" style="margin-bottom:20px;">
+      <div style="font-size:1rem;font-weight:bold;color:#374151;" id="report-title">報表摘要</div>
+      <div style="font-size:0.82rem;color:#9ca3af;margin-top:2px;" id="report-subtitle">顯示所有紀錄</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;align-items:start;">
+      <!-- 損益表 -->
+      <div>
+        <div style="font-size:0.85rem;font-weight:bold;color:#6b7280;letter-spacing:0.05em;margin-bottom:12px;text-transform:uppercase;">損益表（未稅）</div>
+        <div class="pnl-table" id="pnl-cards"></div>
+      </div>
+
+      <!-- 營業稅摘要 -->
+      <div>
+        <div style="font-size:0.85rem;font-weight:bold;color:#6b7280;letter-spacing:0.05em;margin-bottom:12px;text-transform:uppercase;">營業稅摘要</div>
+        <div id="tax-summary"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // 支援未來擴充的完整科目類型清單
+  // 目前介面僅使用 income / cost / expense
+  // 保留 asset / liability / equity 供未來擴充
+  const ACCOUNT_TYPES = ['income', 'cost', 'expense', 'asset', 'liability', 'equity'];
+
+  let records = JSON.parse(localStorage.getItem('acc-records') || '[]');
+
+  // 遷移舊資料：補上 account_type 欄位
+  records = records.map(r => ({
+    account_type: r.type,   // 預設與 type 相同
+    ...r,                    // 若已有 account_type 則保留原值
+  }));
+
+  let editingId = null;
+
+  // 預設日期為今天
+  document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+
+  function save() {
+    localStorage.setItem('acc-records', JSON.stringify(records));
+  }
+
+  function fmt(n) {
+    return Number(n).toLocaleString('zh-TW', { minimumFractionDigits: 0 });
+  }
+
+  function readForm() {
+    const date       = document.getElementById('f-date').value;
+    const type       = document.getElementById('f-type').value;
+    const category   = document.getElementById('f-category').value;
+    const name       = document.getElementById('f-name').value.trim();
+    const exTax      = parseFloat(document.getElementById('f-ex-tax').value) || 0;
+    const tax        = parseFloat(document.getElementById('f-tax').value) || 0;
+    const inclTax    = exTax + tax;
+    const deductible = type !== 'income' && document.getElementById('f-deductible').value === 'true';
+    const note       = document.getElementById('f-note').value.trim();
+    // account_type 目前與 type 相同，未來可獨立設定
+    const account_type = type;
+    return { date, type, account_type, category, name, exTax, tax, inclTax, deductible, note };
+  }
+
+  function clearForm() {
+    ['f-name','f-ex-tax','f-tax','f-incl-tax','f-note'].forEach(id => document.getElementById(id).value = '');
+    updateCategoryOptions();
+  }
+
+  function submitForm() {
+    if (editingId !== null) {
+      saveEdit();
+    } else {
+      addRecord();
+    }
+  }
+
+  function addRecord() {
+    const data = readForm();
+    if (!data.date || !data.name) { alert('請填寫日期與項目名稱'); return; }
+    records.push({ id: Date.now(), ...data });
+    save();
+    render();
+    clearForm();
+  }
+
+  function editRecord(id) {
+    const r = records.find(r => r.id === id);
+    if (!r) return;
+    editingId = id;
+
+    // 填入表單
+    document.getElementById('f-date').value = r.date;
+    document.getElementById('f-type').value = r.type;
+    updateCategoryOptions();
+    document.getElementById('f-category').value = r.category;
+    document.getElementById('f-name').value  = r.name;
+    document.getElementById('f-ex-tax').value = r.exTax;
+    document.getElementById('f-tax').value    = r.tax;
+    document.getElementById('f-incl-tax').value = r.inclTax;
+    document.getElementById('f-deductible').value = r.deductible ? 'true' : 'false';
+    document.getElementById('f-note').value  = r.note;
+
+    // 切換 UI 至編輯模式
+    document.getElementById('form-title').textContent  = '編輯紀錄';
+    document.getElementById('editing-banner').style.display = '';
+    document.getElementById('submit-btn').textContent  = '儲存修改';
+    document.getElementById('cancel-btn').style.display = '';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function saveEdit() {
+    const data = readForm();
+    if (!data.date || !data.name) { alert('請填寫日期與項目名稱'); return; }
+    const idx = records.findIndex(r => r.id === editingId);
+    if (idx !== -1) records[idx] = { id: editingId, ...data };
+    save();
+    render();
+    cancelEdit();
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    document.getElementById('form-title').textContent  = '新增紀錄';
+    document.getElementById('editing-banner').style.display = 'none';
+    document.getElementById('submit-btn').textContent  = '新增';
+    document.getElementById('cancel-btn').style.display = 'none';
+    clearForm();
+    document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+  }
+
+  function deleteRecord(id) {
+    records = records.filter(r => r.id !== id);
+    save();
+    render();
+  }
+
+  function clearFilter() {
+    document.getElementById('filter-month').value = '';
+    document.getElementById('filter-type').value = '';
+    render();
+  }
+
+  function getFiltered() {
+    const month = document.getElementById('filter-month').value; // "2026-04"
+    const type  = document.getElementById('filter-type').value;
+    return records.filter(r => {
+      if (month && !r.date.startsWith(month)) return false;
+      if (type  && r.type !== type)          return false;
+      return true;
+    });
+  }
+
+  function render() {
+    const filtered = getFiltered();
+    const tbody = document.getElementById('records-body');
+    const empty = document.getElementById('records-empty');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = '';
+    } else {
+      empty.style.display = 'none';
+      tbody.innerHTML = filtered
+        .sort((a,b) => a.date.localeCompare(b.date))
+        .map(r => `
+          <tr>
+            <td>${r.date}</td>
+            <td><span class="badge badge-${r.type}">${r.type}</span></td>
+            <td>${r.category}</td>
+            <td>${r.name}</td>
+            <td class="num">${fmt(r.exTax)}</td>
+            <td class="num">${fmt(r.tax)}</td>
+            <td class="num">${fmt(r.inclTax)}</td>
+            <td>${r.deductible ? '✔' : '—'}</td>
+            <td style="color:#6b7280;font-size:0.8rem;">${r.note}</td>
+            <td style="white-space:nowrap;">
+              <button class="btn-edit" onclick="editRecord(${r.id})">編輯</button>
+              <button class="btn-danger" style="margin-left:4px;" onclick="deleteRecord(${r.id})">刪除</button>
+            </td>
+          </tr>`).join('');
+    }
+
+    renderPnL(filtered);
+    renderTax(filtered);
+    renderReportHeader();
+  }
+
+  function renderReportHeader() {
+    const month = document.getElementById('filter-month').value;
+    const type  = document.getElementById('filter-type').value;
+    const titleEl    = document.getElementById('report-title');
+    const subtitleEl = document.getElementById('report-subtitle');
+
+    if (month) {
+      const [y, m] = month.split('-');
+      titleEl.textContent = `${y} 年 ${parseInt(m)} 月　報表摘要`;
+    } else {
+      titleEl.textContent = '報表摘要';
+    }
+
+    const parts = [];
+    if (month) parts.push(`${month.replace('-', ' 年 ')} 月`);
+    if (type)  parts.push(`類型：${type}`);
+    subtitleEl.textContent = parts.length ? `篩選條件：${parts.join('、')}` : '顯示所有紀錄';
+  }
+
+  function renderPnL(filtered) {
+    const revenue = filtered.filter(r => r.type === 'income').reduce((s,r) => s + r.exTax, 0);
+    const cogs    = filtered.filter(r => r.type === 'cost').reduce((s,r) => s + r.exTax, 0);
+    const expense = filtered.filter(r => r.type === 'expense').reduce((s,r) => s + r.exTax, 0);
+    const gross   = revenue - cogs;
+    const net     = gross - expense;
+
+    const sign = v => v >= 0 ? 'pos' : 'neg';
+
+    document.getElementById('pnl-cards').innerHTML = `
+      <div class="pnl-row">
+        <span class="pnl-label">總收入</span>
+        <span class="pnl-val blue">$${fmt(revenue)}</span>
+      </div>
+      <div class="pnl-row">
+        <span class="pnl-label indent">減：銷貨成本</span>
+        <span class="pnl-val">− $${fmt(cogs)}</span>
+      </div>
+      <div class="pnl-row subtotal">
+        <span class="pnl-label">毛利</span>
+        <span class="pnl-val ${sign(gross)}">$${fmt(gross)}</span>
+      </div>
+      <div class="pnl-row">
+        <span class="pnl-label indent">減：總費用</span>
+        <span class="pnl-val">− $${fmt(expense)}</span>
+      </div>
+      <div class="pnl-row total">
+        <span class="pnl-label">淨利（稅前）</span>
+        <span class="pnl-val ${sign(net)}">$${fmt(net)}</span>
+      </div>
+    `;
+  }
+
+  function renderTax(filtered) {
+    const outputTax     = filtered.filter(r => r.type === 'income').reduce((s,r) => s + r.tax, 0);
+    const inputTaxAll   = filtered.filter(r => r.type !== 'income').reduce((s,r) => s + r.tax, 0);
+    const inputTaxDeduct= filtered.filter(r => r.type !== 'income' && r.deductible).reduce((s,r) => s + r.tax, 0);
+    const due           = outputTax - inputTaxDeduct;
+
+    document.getElementById('tax-summary').innerHTML = `
+      <div class="tax-row"><span>銷項稅額（output tax）</span><span>$${fmt(outputTax)}</span></div>
+      <div class="tax-row"><span>進項稅額合計</span><span>$${fmt(inputTaxAll)}</span></div>
+      <div class="tax-row"><span>可扣抵進項稅額</span><span>$${fmt(inputTaxDeduct)}</span></div>
+      <div class="tax-row">
+        <span>${due >= 0 ? '當期應納營業稅' : '當期溢付營業稅'}</span>
+        <span class="${due >= 0 ? 'tax-due' : 'tax-over'}">$${fmt(Math.abs(due))}</span>
+      </div>
+    `;
+  }
+
+  // 分類選單依類型切換
+  const categoryOptions = {
+    income:  ['銷售收入'],
+    cost:    ['進貨材料'],
+    expense: ['房租', '水電', '包材', '廣告', '運費', '雜支']
+  };
+
+  function updateCategoryOptions() {
+    const type = document.getElementById('f-type').value;
+    const sel  = document.getElementById('f-category');
+    sel.innerHTML = categoryOptions[type].map(o => `<option value="${o}">${o}</option>`).join('');
+
+    const deductibleWrap = document.getElementById('f-deductible-wrap');
+    deductibleWrap.style.display = type === 'income' ? 'none' : '';
+  }
+
+  document.getElementById('f-type').addEventListener('change', updateCategoryOptions);
+  updateCategoryOptions(); // 初始化
+
+  // 自動計算含稅金額
+  function calcInclTax() {
+    const ex  = parseFloat(document.getElementById('f-ex-tax').value) || 0;
+    const tax = parseFloat(document.getElementById('f-tax').value) || 0;
+    document.getElementById('f-incl-tax').value = ex + tax || '';
+  }
+  document.getElementById('f-ex-tax').addEventListener('input', calcInclTax);
+  document.getElementById('f-tax').addEventListener('input', calcInclTax);
+
+  function exportCSV() {
+    if (records.length === 0) { alert('目前沒有任何紀錄可匯出'); return; }
+
+    const headers = ['日期', '類型', '分類', '項目名稱', '未稅金額', '稅額', '含稅金額', '可扣抵', '備註'];
+    const rows = records
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map(r => [
+        r.date,
+        r.type,
+        r.category,
+        r.name,
+        r.exTax,
+        r.tax,
+        r.inclTax,
+        r.deductible ? '是' : '否',
+        r.note
+      ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(','));
+
+    const csv = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    const date = new Date().toISOString().slice(0, 10);
+    a.href     = url;
+    a.download = `記帳紀錄_${date}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  render();
+</script>
+
+</body>
+</html>

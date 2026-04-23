@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>每週菜單產生器</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    background: #F8F5F1;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+  .wrap { max-width: 660px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.2rem; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #1C1814;
+  }
+  .sub { font-size: 0.72rem; letter-spacing: 0.2em; color: #9A948C; }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.6rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  .card-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: #9A948C;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .field { margin-bottom: 0.9rem; }
+  label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: #5C5650;
+    margin-bottom: 0.35rem;
+  }
+  input[type="text"], input[type="date"] {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    width: 100%;
+    background: #FAFAF8;
+    color: #1C1814;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input:focus { border-color: #B8956A; }
+
+  /* 顏色主題 */
+  .themes { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.4rem; }
+  .theme-btn {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .theme-btn.active { border-color: #1C1814; }
+
+  /* 類別區塊 */
+  .category-block {
+    border: 1px solid #E0DAD2;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #FAFAF8;
+  }
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+  .category-name-input {
+    flex: 1;
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1C1814;
+    outline: none;
+    font-weight: 400;
+  }
+  .category-name-input:focus { border-color: #B8956A; }
+  .del-cat-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .del-cat-btn:hover { color: #ED2939; }
+
+  .item-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+    align-items: center;
+  }
+  .input-name  { flex: 2; }
+  .input-price { flex: 1; }
+  .item-row input {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.82rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1C1814;
+    outline: none;
+    width: 100%;
+  }
+  .item-row input:focus { border-color: #B8956A; }
+
+  .item-desc-row {
+    margin-left: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .input-desc {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.75rem;
+    font-family: inherit;
+    background: #fff;
+    color: #9A948C;
+    outline: none;
+    width: calc(100% - 2rem);
+  }
+  .input-desc:focus { border-color: #B8956A; }
+  .remove-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .remove-btn:hover { color: #ED2939; }
+
+  .add-item-btn {
+    background: none;
+    border: 1px dashed #C0B8B0;
+    color: #9A948C;
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 0.3rem;
+    transition: border-color 0.15s;
+  }
+  .add-item-btn:hover { border-color: #B8956A; color: #B8956A; }
+
+  .add-cat-btn {
+    background: none;
+    border: 1px dashed #B8956A;
+    color: #B8956A;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .add-cat-btn:hover { background: #fdf8f3; }
+
+  .generate-btn {
+    background: #1C1814;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    transition: background 0.18s;
+  }
+  .generate-btn:hover { background: #3a3530; }
+  .generate-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+  .status {
+    text-align: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    min-height: 1.4rem;
+    color: #5C5650;
+  }
+  .status.ok  { color: #2a7a4f; }
+  .status.err { color: #ED2939; }
+
+  .download-btn {
+    display: none;
+    background: none;
+    border: 1px solid #1C1814;
+    color: #1C1814;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    width: 100%;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .download-btn:hover { background: #f5f3f0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>每週菜單產生器</h1>
+    <p class="sub">Weekly Menu Generator · 填好按「產生圖片」即可</p>
+  </div>
+
+  <!-- 品牌設定 -->
+  <div class="card">
+    <p class="card-title">品牌設定</p>
+    <div class="field"><label>品牌名稱</label><input type="text" id="inp-brand" placeholder="例：My Burger Shop" /></div>
+    <div class="field"><label>菜單標題</label><input type="text" id="inp-title" value="本週菜單" /></div>
+    <div class="field"><label>副標</label><input type="text" id="inp-subtitle" value="每週限量　售完為止" /></div>
+    <div class="field"><label>頁尾聯絡資訊</label><input type="text" id="inp-footer" placeholder="例：預訂請私訊 IG @yourshop" /></div>
+    <div class="field"><label>日期</label><input type="date" id="inp-date" /></div>
+  </div>
+
+  <!-- 顏色主題 -->
+  <div class="card">
+    <p class="card-title">顏色主題</p>
+    <div class="themes" id="themes">
+      <button class="theme-btn active" data-theme="french" style="background:#f0f3ff;color:#002395;" onclick="setTheme(this)">法國藍</button>
+      <button class="theme-btn" data-theme="warm"   style="background:#fdf8f3;color:#B8956A;" onclick="setTheme(this)">暖奶茶</button>
+      <button class="theme-btn" data-theme="forest" style="background:#f2f5f2;color:#3a6b4a;" onclick="setTheme(this)">森林綠</button>
+      <button class="theme-btn" data-theme="dark"   style="background:#f0f0f0;color:#1C1814;" onclick="setTheme(this)">深墨黑</button>
+      <button class="theme-btn" data-theme="rose"   style="background:#fdf0f2;color:#c45a6a;" onclick="setTheme(this)">玫瑰粉</button>
+    </div>
+  </div>
+
+  <!-- 類別與品項 -->
+  <div class="card">
+    <p class="card-title">菜單類別與品項</p>
+    <div id="categories-container"></div>
+    <button class="add-cat-btn" onclick="addCategory()">＋ 新增類別</button>
+  </div>
+
+  <button class="generate-btn" onclick="generate()">產生圖片</button>
+  <div class="status" id="status"></div>
+  <button class="download-btn" id="download-btn" onclick="download()">下載圖片</button>
+</div>
+
+<script>
+  const THEMES = {
+    french: { c1:'#002395', c2:'#EDEDED', c3:'#ED2939', accent:'#002395', bg:'#FFFFFF' },
+    warm:   { c1:'#B8956A', c2:'#F0EBE3', c3:'#8a6a45', accent:'#B8956A', bg:'#FDFAF7' },
+    forest: { c1:'#3a6b4a', c2:'#E8EFE8', c3:'#6b9a78', accent:'#3a6b4a', bg:'#FAFDF9' },
+    dark:   { c1:'#1C1814', c2:'#C0B8B0', c3:'#5C5650', accent:'#1C1814', bg:'#FFFFFF' },
+    rose:   { c1:'#c45a6a', c2:'#F5E8EA', c3:'#e8a0aa', accent:'#c45a6a', bg:'#FFFAFA' },
+  };
+  let currentTheme = 'french';
+
+  function setTheme(btn) {
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTheme = btn.dataset.theme;
+  }
+
+  document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
+
+  const defaultCategories = [
+    {
+      name: '',
+      items: [['', ''], ['', '']]
+    }
+  ];
+
+  function addCategory(name = '', items = [['', ''], ['', '']]) {
+    const container = document.getElementById('categories-container');
+    const block = document.createElement('div');
+    block.className = 'category-block';
+
+    const itemsHtml = items.map(item => {
+      const n = item.name || item[0] || '';
+      const p = item.price || item[1] || '';
+      const d = item.desc || item[2] || '';
+      return makeItemRow(n, p, d);
+    }).join('');
+    block.innerHTML = `
+      <div class="category-header">
+        <input class="category-name-input" type="text" placeholder="類別名稱（例：漢堡、飲品）" value="${name}" />
+        <button class="del-cat-btn" onclick="this.closest('.category-block').remove()">×</button>
+      </div>
+      <div class="items-list">${itemsHtml}</div>
+      <button class="add-item-btn" onclick="addItemToBlock(this)">＋ 新增品項</button>
+    `;
+    container.appendChild(block);
+  }
+
+  function makeItemRow(name = '', price = '', desc = '') {
+    return `<div class="item-row">
+      <input type="text" class="input-name"  placeholder="品項名稱" value="${name}" />
+      <input type="text" class="input-price" placeholder="價格" value="${price}" />
+      <button class="remove-btn" onclick="removeItem(this)">×</button>
+    </div>
+    <div class="item-desc-row">
+      <input type="text" class="input-desc" placeholder="描述（可選）" value="${desc}" />
+    </div>`;
+  }
+
+  function removeItem(btn) {
+    btn.closest('.item-row').remove();
+    btn.closest('.item-row').nextElementSibling?.remove();
+  }
+
+  function addItemToBlock(btn) {
+    const list = btn.previousElementSibling;
+    list.insertAdjacentHTML('beforeend', makeItemRow());
+  }
+
+  // 預設一個空類別
+  addCategory('', [['', ''], ['', ''], ['', '']]);
+
+  async function generate() {
+    const btn    = document.querySelector('.generate-btn');
+    const status = document.getElementById('status');
+    const dlBtn  = document.getElementById('download-btn');
+
+    const catBlocks = document.querySelectorAll('.category-block');
+    const categories = [];
+    catBlocks.forEach(block => {
+      const catName = block.querySelector('.category-name-input').value.trim();
+      const rows = block.querySelectorAll('.item-row');
+      const items = [];
+      rows.forEach((row, idx) => {
+        const n = row.querySelector('.input-name').value.trim();
+        const p = row.querySelector('.input-price').value.trim();
+        const d = row.nextElementSibling?.querySelector('.input-desc')?.value.trim() || '';
+        if (n && p) items.push({ name: n, price: p, desc: d });
+      });
+      if (items.length > 0) categories.push({ name: catName || '其他', items });
+    });
+
+    if (categories.length === 0) {
+      status.textContent = '請至少輸入一個品項';
+      status.className = 'status err';
+      return;
+    }
+
+    const dateVal = document.getElementById('inp-date').value;
+    const config = {
+      brand:    document.getElementById('inp-brand').value.trim() || '我的店',
+      title:    document.getElementById('inp-title').value.trim() || '本週菜單',
+      subtitle: document.getElementById('inp-subtitle').value.trim(),
+      footer:   document.getElementById('inp-footer').value.trim(),
+      date:     dateVal.replace(/-/g, '.'),
+      ...THEMES[currentTheme],
+    };
+
+    btn.disabled = true;
+    status.textContent = '產生中...';
+    status.className = 'status';
+    dlBtn.style.display = 'none';
+
+    try {
+      const res = await fetch('/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories, config }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        status.textContent = '✅ 圖片產生成功！';
+        status.className = 'status ok';
+        dlBtn.style.display = 'block';
+      } else throw new Error(data.error);
+    } catch (e) {
+      status.textContent = '❌ 錯誤：' + e.message;
+      status.className = 'status err';
+    }
+    btn.disabled = false;
+  }
+
+  function download() { window.location.href = '/download'; }
+</script>
+</body>
+</html>

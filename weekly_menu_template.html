@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Noto+Sans+TC:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: auto;
+    min-height: 630px;
+    background: var(--bg, #FFFFFF);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    padding: 48px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    width: 100%;
+  }
+  .tricolor {
+    display: flex;
+    height: 4px;
+    margin-bottom: 24px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .t1 { flex:1; background: var(--c1,#002395); }
+  .t2 { flex:1; background: var(--c2,#EDEDED); }
+  .t3 { flex:1; background: var(--c3,#ED2939); }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--accent,#002395);
+    letter-spacing: 0.14em;
+  }
+  .date { font-size: 13px; color: #9A948C; letter-spacing: 0.1em; }
+  .rule { border: none; border-top: 1px solid #E8E8E8; margin-bottom: 18px; }
+  .header-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 6px;
+  }
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 52px;
+    font-weight: 400;
+    color: #1C1814;
+    line-height: 1.1;
+  }
+  .subtitle {
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: #9A948C;
+    margin-bottom: 16px;
+  }
+  .accent-rule {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, var(--c1,#002395), var(--c3,#ED2939));
+    margin-bottom: 22px;
+    border-radius: 1px;
+  }
+
+  /* 類別區塊 */
+  .categories {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+  .categories.col-1 { grid-template-columns: 1fr; }
+  .categories.col-2 { grid-template-columns: 1fr 1fr; }
+
+  .category-block { }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--accent,#002395);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--c1,#002395);
+  }
+  .menu-list { list-style: none; }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    padding: 5px 0;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .item-name {
+    font-size: 16px;
+    color: #1C1814;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .item-dots {
+    flex: 1;
+    margin: 0 12px;
+    border-bottom: 1px dotted #E0E0E0;
+    position: relative;
+    top: -3px;
+  }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--accent,#002395);
+    flex-shrink: 0;
+  }
+  .menu-desc {
+    font-size: 11px;
+    color: #9A948C;
+    letter-spacing: 0.04em;
+    padding: 2px 0 5px 0;
+    border-bottom: 1px solid #F0F0F0;
+    list-style: none;
+  }
+
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: #9A948C;
+    border-top: 1px solid #F0F0F0;
+    padding-top: 14px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tricolor"><div class="t1"></div><div class="t2"></div><div class="t3"></div></div>
+  <div class="top">
+    <span class="brand" id="brand-name"></span>
+    <span class="date" id="date"></span>
+  </div>
+  <hr class="rule">
+  <div class="header-row">
+    <div class="title" id="menu-title">本週菜單</div>
+  </div>
+  <div class="subtitle" id="menu-subtitle">每週限量　售完為止</div>
+  <div class="accent-rule"></div>
+  <div class="categories" id="categories"></div>
+  <div class="footer" id="footer"></div>
+</div>
+
+<script>
+  const CONFIG     = window.__CONFIG__ || {};
+  const CATEGORIES = window.__CATEGORIES__ || [];
+
+  const root = document.documentElement;
+  if (CONFIG.c1)     root.style.setProperty('--c1', CONFIG.c1);
+  if (CONFIG.c2)     root.style.setProperty('--c2', CONFIG.c2);
+  if (CONFIG.c3)     root.style.setProperty('--c3', CONFIG.c3);
+  if (CONFIG.accent) root.style.setProperty('--accent', CONFIG.accent);
+  if (CONFIG.bg)     root.style.setProperty('--bg', CONFIG.bg);
+
+  document.getElementById('brand-name').textContent   = CONFIG.brand    || '我的店';
+  document.getElementById('date').textContent         = CONFIG.date     || '';
+  document.getElementById('menu-title').textContent   = CONFIG.title    || '本週菜單';
+  document.getElementById('menu-subtitle').textContent= CONFIG.subtitle || '';
+  document.getElementById('footer').textContent       = CONFIG.footer   || '';
+
+  const container = document.getElementById('categories');
+  container.className = 'categories ' + (CATEGORIES.length >= 2 ? 'col-2' : 'col-1');
+
+  CATEGORIES.forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+    const itemsHtml = cat.items.map(item => {
+      const name = item.name || item[0] || '';
+      const price = item.price || item[1] || '';
+      const desc = item.desc || item[2] || '';
+      return `
+        <li class="menu-item">
+          <span class="item-name">${name}</span>
+          <span class="item-dots"></span>
+          <span class="item-price">${price}</span>
+        </li>
+        ${desc ? `<li class="menu-desc">${desc}</li>` : ''}
+      `;
+    }).join('');
+    block.innerHTML = `
+      <div class="category-name">${cat.name}</div>
+      <ul class="menu-list">${itemsHtml}</ul>`;
+    container.appendChild(block);
+  });
+</script>
+</body>
+</html>

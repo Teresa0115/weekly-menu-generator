@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>我的書籤</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: #F8F5F1;
+    min-height: 100vh;
+    padding: 3rem 1.5rem;
+    color: #1C1814;
+  }
+  h1 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .sub {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: #9A948C;
+    margin-bottom: 2.5rem;
+  }
+  .container { max-width: 680px; margin: 0 auto; }
+
+  .add-form {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  input, textarea {
+    border: 1px solid #E0DAD2;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.88rem;
+    font-family: inherit;
+    width: 100%;
+    background: #FAFAF8;
+    color: #1C1814;
+    outline: none;
+  }
+  input:focus, textarea:focus { border-color: #B8956A; }
+  textarea { resize: vertical; min-height: 60px; }
+  button {
+    background: #1C1814;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    align-self: flex-end;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  button:hover { background: #3a3530; }
+
+  .list { display: flex; flex-direction: column; gap: 1rem; }
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  .card-note {
+    font-size: 0.75rem;
+    color: #5C5650;
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+  .card-link {
+    font-size: 0.72rem;
+    color: #B8956A;
+    word-break: break-all;
+    text-decoration: none;
+    border-bottom: 1px solid #E0DAD2;
+    padding-bottom: 1px;
+  }
+  .card-link:hover { color: #8a6a45; }
+  .card-date {
+    font-size: 0.65rem;
+    color: #C0B8B0;
+    margin-top: 0.6rem;
+  }
+  .del-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #C0B8B0;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+  }
+  .del-btn:hover { color: #ED2939; background: none; }
+  .empty {
+    text-align: center;
+    color: #9A948C;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    padding: 2rem;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>我的書籤</h1>
+  <p class="sub">收藏有興趣的連結</p>
+
+  <div class="add-form">
+    <input type="text" id="inp-title" placeholder="標題（選填）" />
+    <input type="url"  id="inp-url"   placeholder="網址" />
+    <textarea id="inp-note" placeholder="備註（選填）"></textarea>
+    <button onclick="addBookmark()">儲存</button>
+  </div>
+
+  <div class="list" id="list"></div>
+</div>
+
+<script>
+  const KEY = 'my_bookmarks';
+
+  function load() {
+    return JSON.parse(localStorage.getItem(KEY) || '[]');
+  }
+  function save(data) {
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+
+  function render() {
+    const list = document.getElementById('list');
+    const data = load();
+    if (data.length === 0) {
+      list.innerHTML = '<p class="empty">還沒有書籤</p>';
+      return;
+    }
+    list.innerHTML = data.map((item, i) => `
+      <div class="card">
+        <button class="del-btn" onclick="remove(${i})">×</button>
+        <div class="card-title">${item.title || '（無標題）'}</div>
+        ${item.note ? `<div class="card-note">${item.note}</div>` : ''}
+        <a class="card-link" href="${item.url}" target="_blank">${item.url}</a>
+        <div class="card-date">${item.date}</div>
+      </div>
+    `).join('');
+  }
+
+  function addBookmark() {
+    const title = document.getElementById('inp-title').value.trim();
+    const url   = document.getElementById('inp-url').value.trim();
+    const note  = document.getElementById('inp-note').value.trim();
+    if (!url) { alert('請輸入網址'); return; }
+    const data = load();
+    data.unshift({ title, url, note, date: new Date().toLocaleDateString('zh-TW') });
+    save(data);
+    document.getElementById('inp-title').value = '';
+    document.getElementById('inp-url').value = '';
+    document.getElementById('inp-note').value = '';
+    render();
+  }
+
+  function remove(i) {
+    const data = load();
+    data.splice(i, 1);
+    save(data);
+    render();
+  }
+
+  render();
+</script>
+</body>
+</html>
