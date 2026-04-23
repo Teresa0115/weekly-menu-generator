@@ -39,7 +39,7 @@ const server = http.createServer(async (req, res) => {
         const tmpFile = path.join(__dirname, '_weekly_menu_gen.html');
         fs.writeFileSync(tmpFile, template);
 
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
         const page = await browser.newPage();
         await page.setViewport({ width: 1200, height });
         await page.goto(`file:///${tmpFile}`, { waitUntil: 'networkidle0' });
