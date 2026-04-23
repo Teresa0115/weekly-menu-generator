@@ -45,11 +45,15 @@ const server = http.createServer(async (req, res) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1200, height });
         await page.goto(`file:///${tmpFile}`, { waitUntil: 'networkidle0' });
-        await page.screenshot({
-          path: path.join(__dirname, 'weekly_menu_output.png'),
+        const screenshot = await page.screenshot({
           fullPage: false,
           clip: { x: 0, y: 0, width: 1200, height }
         });
+
+        // 同時儲存到檔案系統（用於本地）和快取在記憶體中（用於下載）
+        fs.writeFileSync(path.join(__dirname, 'weekly_menu_output.png'), screenshot);
+        global.lastScreenshot = screenshot;
+
         await browser.close();
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -63,13 +67,12 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === 'GET' && req.url === '/download') {
-    const imgPath = path.join(__dirname, 'weekly_menu_output.png');
-    if (fs.existsSync(imgPath)) {
+    if (global.lastScreenshot) {
       res.writeHead(200, {
         'Content-Type': 'image/png',
         'Content-Disposition': 'attachment; filename="weekly_menu.png"'
       });
-      fs.createReadStream(imgPath).pipe(res);
+      res.end(global.lastScreenshot);
     } else {
       res.writeHead(404); res.end('尚未產生圖片');
     }
