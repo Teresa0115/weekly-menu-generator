@@ -1,0 +1,34 @@
+node_modules/
+.DS_Store
+*.png
+*.jpg
+*.jpeg
+
+# 舊的 Nosif 版本（menu_server.js）
+menu_server.js
+menu_editor.html
+menu_template.html
+menu_template_gen.html
+menu_this_week.png
+
+# 臨時和生成檔案
+_weekly_menu_gen.html
+weekly_menu_output.png
+menu_image.py
+generate_menu.js
+
+# 不相關的 HTML 檔案
+accounting.html
+bookmarks.html
+index.html
+sales.html
+nosif.html
+
+# 私密配置
+CLAUDE.local.md
+
+# 圖片資源
+canele-box.png
+croissant-coffee.jpg
+croissant.jpg
+quiche.png
