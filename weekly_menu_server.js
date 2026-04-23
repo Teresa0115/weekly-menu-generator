@@ -50,14 +50,15 @@ const server = http.createServer(async (req, res) => {
           clip: { x: 0, y: 0, width: 1200, height }
         });
 
-        // 同時儲存到檔案系統（用於本地）和快取在記憶體中（用於下載）
+        // 儲存到檔案系統並返回 Base64 用於下載
         fs.writeFileSync(path.join(__dirname, 'weekly_menu_output.png'), screenshot);
         global.lastScreenshot = screenshot;
 
         await browser.close();
 
+        const imageBase64 = screenshot.toString('base64');
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ ok: true }));
+        res.end(JSON.stringify({ ok: true, image: imageBase64 }));
       } catch (e) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ ok: false, error: e.message }));
