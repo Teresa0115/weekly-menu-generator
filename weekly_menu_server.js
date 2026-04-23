@@ -40,13 +40,12 @@ const server = http.createServer(async (req, res) => {
         fs.writeFileSync(tmpFile, template);
 
         const browser = await puppeteer.launch({
-          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
+          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+          timeout: 60000
         });
         const page = await browser.newPage();
         await page.setViewport({ width: 1200, height });
         await page.goto(`file:///${tmpFile}`, { waitUntil: 'networkidle0' });
-        // 等待字體加載完成
-        await page.waitForTimeout(2000);
         const screenshot = await page.screenshot({
           fullPage: false,
           clip: { x: 0, y: 0, width: 1200, height }
