@@ -284,5 +284,12 @@ https://weekly-menu-generator-production.up.railway.app
 ### 版本資訊
 - **當前版本**：v1.0（穩定版，已上線）
 - **部署環境**：Railway（自動化 CD）
-- **功能狀態**：完整、生產環境可用
+- **功能狀態**：✅ 完整、生產環境可用
 - **已驗證功能**：✅ 所有核心功能正常運作
+- **中文渲染**：✅ 已修復（Noto Sans TC 後備字體）
+- **線上服務**：https://weekly-menu-generator-production.up.railway.app
+
+### 使用狀況
+- 可直接分享 URL 給用戶
+- 無需安裝，打開即用
+- 自動化部署（git push → Railway）
