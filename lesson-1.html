@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第一課｜AI 到底可以幫我做什麼？ - AI 新手第一步</title>
+
+  <style>
+    :root {
+      --bg: #fffaf3;
+      --card: #ffffff;
+      --text: #2b2b2b;
+      --muted: #666666;
+      --main: #f2b66d;
+      --main-dark: #d8913f;
+      --soft: #fff0dc;
+      --border: #ead7bd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(900px, 90%);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .back-link {
+      font-size: 14px;
+      color: var(--muted);
+      transition: 0.25s;
+    }
+
+    .back-link:hover {
+      color: var(--main);
+    }
+
+    .hero {
+      padding: 50px 0;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .content {
+      padding: 60px 0;
+    }
+
+    .article {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 50px;
+      box-shadow: 0 12px 30px rgba(120, 80, 30, 0.08);
+    }
+
+    .article-intro {
+      font-size: 18px;
+      color: var(--text);
+      background: var(--soft);
+      padding: 28px;
+      border-radius: 16px;
+      margin-bottom: 36px;
+      border-left: 4px solid var(--main);
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      font-size: 24px;
+      color: var(--text);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .section p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .section ul {
+      margin: 20px 0;
+      margin-left: 24px;
+    }
+
+    .section li {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .section strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .practice-box {
+      background: var(--soft);
+      border-radius: 16px;
+      padding: 28px;
+      margin: 20px 0;
+      border-left: 4px solid var(--main);
+    }
+
+    .practice-box h4 {
+      color: var(--main-dark);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .practice-box p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .prompt-code {
+      background: #f5f5f5;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px 0;
+      font-family: "Monaco", "Courier New", monospace;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+
+    .cta-section {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--main);
+      color: #2b1b08;
+      padding: 14px 30px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: 0.25s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--main-dark);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 2px solid var(--main);
+      color: var(--main);
+    }
+
+    .btn-secondary:hover {
+      background: var(--soft);
+      border-color: var(--main-dark);
+      color: var(--main-dark);
+    }
+
+    footer {
+      padding: 36px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+      margin-top: 60px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 16px 0;
+      }
+
+      .hero {
+        padding: 40px 0;
+      }
+
+      .hero h1 {
+        margin-bottom: 12px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .content {
+        padding: 40px 0;
+      }
+
+      .article {
+        padding: 28px;
+      }
+
+      .section h2 {
+        font-size: 20px;
+      }
+
+      .section p,
+      .section li {
+        font-size: 15px;
+      }
+
+      .cta-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="logo">AI 新手第一步</div>
+      <a class="back-link" href="course.html">← 回課程總覽</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+        <h1>第一課：AI 到底可以幫我做什麼？</h1>
+        <p>
+          先不用學技術，先學會用 AI 幫你省時間、整理想法、完成工作。
+        </p>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container">
+        <article class="article">
+
+          <div class="article-intro">
+            很多人第一次打開 ChatGPT 或 Claude，常常會不知道要問什麼。不是你不會用，而是你還不知道 AI 適合放在哪些工作裡。
+          </div>
+
+          <div class="section">
+            <h2>一、為什麼很多人用了 AI 還是覺得不好用？</h2>
+            <p>
+              因為他們把 AI 當成搜尋引擎，或是一開始就期待它直接給出完美答案。
+              AI 比較適合當作一個可以陪你討論、整理、改寫、規劃的工作助理。
+            </p>
+            <p>
+              你有沒有經驗，和朋友聊一個想法，聊著聊著靈感就來了？
+              或是把混亂的想法説出來，説完之後就清楚了？
+              <strong>AI 就是這樣的角色</strong> - 它聽你說，然後幫你整理、優化、改寫。
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>二、AI 不是魔法，它比較像一個很快的助理</h2>
+            <p>
+              你給它越清楚的背景，它越能幫你做出接近你需要的內容。
+            </p>
+            <p>
+              它可以幫你：
+            </p>
+            <ul>
+              <li><strong>寫初稿</strong> - 商品文案、IG 貼文、課程介紹</li>
+              <li><strong>整理想法</strong> - 把混亂的筆記整理成清楚的架構</li>
+              <li><strong>列出架構</strong> - 課程大綱、項目計畫、行銷策略</li>
+              <li><strong>修改語氣</strong> - 讓文案更溫暖、更專業、更直接</li>
+              <li><strong>做表格</strong> - 整理客戶資料、月度計畫、價格比較</li>
+              <li><strong>幫你檢查</strong> - 找出邏輯問題、文法錯誤、遺漏的重點</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>三、小老闆最適合用 AI 做的 5 件事</h2>
+            <ul>
+              <li><strong>寫商品介紹</strong> - 快速產出吸引人的描述，省下一半的時間</li>
+              <li><strong>寫社群貼文</strong> - 再也不用盯著空白螢幕半小時想文案</li>
+              <li><strong>整理客戶常見問題</strong> - 把散亂的 Line 訊息整理成 FAQ</li>
+              <li><strong>規劃課程或服務內容</strong> - AI 幫你整理課綱、服務說明、流程</li>
+              <li><strong>把混亂的想法整理成清楚架構</strong> - 你有靈感，AI 幫你組織</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>四、你不要一開始就叫 AI 幫你想全部</h2>
+            <p>
+              比較好的方式是先給它角色、背景、目標、限制。
+            </p>
+            <p>
+              <strong>不好的問法：</strong>「幫我寫一篇貼文」
+            </p>
+            <p>
+              <strong>好的問法：</strong>「我是甜點店老闆，我想寫一篇介紹可頌的貼文，語氣要溫暖，不要太浮誇，適合放在 Instagram，篇幅大約 150 字。」
+            </p>
+            <p>
+              看到差別了嗎？第二種問法，AI 就知道你是誰、想做什麼、要什麼風格。結果會完全不一樣。
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>五、第一個練習</h2>
+            <p>
+              請你打開 ChatGPT（或 Claude），複製貼上下面這個提示詞，然後按送出：
+            </p>
+
+            <div class="practice-box">
+              <h4>📌 複製以下提示詞：</h4>
+              <div class="prompt-code">我是一位小老闆，正在經營自己的品牌。請你用簡單的方式，幫我列出 10 個我可以用 AI 幫忙完成的日常工作，並依照「最容易開始」到「比較進階」排序。</div>
+            </div>
+
+            <p>
+              AI 會給你一份清單，列出你可以試試看的工作。
+              這些就是最適合開始用 AI 的任務。
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>六、本課作業</h2>
+            <p>
+              請你選出其中 <strong>3 件最想先交給 AI 幫忙的工作</strong>，寫下來。
+            </p>
+            <p>
+              不用寫太詳細，就是簡單記一下，比如：
+            </p>
+            <ul>
+              <li>寫商品介紹</li>
+              <li>整理客戶問卷回覆</li>
+              <li>規劃下個月的內容</li>
+            </ul>
+            <p>
+              <strong>為什麼要這樣做？</strong>
+              因為下一課我們會開始學怎麼把需求講清楚，
+              讓 AI 給你的答案更好用。
+              有具體的工作目標，你會學得更快。
+            </p>
+          </div>
+
+          <div class="cta-section">
+            <a href="course.html" class="btn btn-secondary">回課程總覽</a>
+            <a href="lesson-2.html" class="btn">下一課：學會下指令 →</a>
+          </div>
+
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 AI 新手第一步 | 第 1 課
+  </footer>
+
+</body>
+</html>

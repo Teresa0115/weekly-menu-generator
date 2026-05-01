@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五課｜用 AI 規劃你的第一個網站首頁 - AI 新手第一步</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: #FAF7F3;
+            color: #3C3C3C;
+            line-height: 1.8;
+        }
+
+        header {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #3C3C3C;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #999;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #F4B63F;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .lesson-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .lesson-number {
+            color: #F4B63F;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 1.5rem;
+        }
+
+        article {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .coming-soon {
+            font-size: 1.2rem;
+            color: #999;
+            margin: 3rem 0;
+        }
+
+        .lesson-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #E8E8E8;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #F4B63F;
+            color: #2C2C2C;
+        }
+
+        .btn-primary:hover {
+            background: #D8913F;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #F4B63F;
+            border: 2px solid #F4B63F;
+        }
+
+        .btn-secondary:hover {
+            background: #FFF9F0;
+        }
+
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #E8E8E8;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .lesson-title {
+                font-size: 1.6rem;
+            }
+
+            article {
+                padding: 1.5rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="../index.html" class="logo">AI 新手第一步</a>
+            <a href="../course.html" class="back-link">← 回課程目錄</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="lesson-header">
+            <div class="lesson-number">第五課</div>
+            <h1 class="lesson-title">用 AI 規劃你的第一個網站首頁</h1>
+        </div>
+
+        <article>
+            <p class="coming-soon">本課內容整理中</p>
+            <p style="color: #999;">敬請期待...</p>
+
+            <div class="lesson-nav">
+                <a href="lesson-4.html" class="btn btn-secondary">← 上一課：用 AI 整理商品介紹與客服回覆</a>
+                <a href="../course.html" class="btn btn-secondary">回課程目錄</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AI 新手第一步 | 第 5 課 (最後一課)</p>
+    </footer>
+</body>
+</html>

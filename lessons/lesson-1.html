@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一課｜AI 到底是什麼？小老闆怎麼開始用？- AI 新手第一步</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: #FAF7F3;
+            color: #3C3C3C;
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #3C3C3C;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #999;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #F4B63F;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .lesson-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .lesson-number {
+            color: #F4B63F;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2C2C2C;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .lesson-intro {
+            background: #FFF9F0;
+            border-left: 4px solid #F4B63F;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+            color: #3C3C3C;
+            line-height: 1.8;
+        }
+
+        /* Article Content */
+        article {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        article h2 {
+            font-size: 1.6rem;
+            color: #2C2C2C;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        article h2:first-child {
+            margin-top: 0;
+        }
+
+        article p {
+            margin-bottom: 1.5rem;
+            color: #3C3C3C;
+            line-height: 1.8;
+        }
+
+        article ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        article li {
+            margin-bottom: 0.8rem;
+            color: #3C3C3C;
+            line-height: 1.7;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: #FFF9F0;
+            border: 1px solid #F4B63F;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .practice-box h3 {
+            color: #D8913F;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .prompt-code {
+            background: white;
+            border: 1px solid #E8E8E8;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #2C2C2C;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Navigation */
+        .lesson-nav {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #E8E8E8;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #F4B63F;
+            color: #2C2C2C;
+        }
+
+        .btn-primary:hover {
+            background: #D8913F;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #F4B63F;
+            border: 2px solid #F4B63F;
+        }
+
+        .btn-secondary:hover {
+            background: #FFF9F0;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #E8E8E8;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .lesson-title {
+                font-size: 1.6rem;
+            }
+
+            article {
+                padding: 1.5rem;
+            }
+
+            article h2 {
+                font-size: 1.3rem;
+            }
+
+            .practice-box {
+                padding: 1.5rem;
+            }
+
+            .prompt-code {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .lesson-nav {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 0 1rem;
+            }
+
+            .lesson-title {
+                font-size: 1.4rem;
+            }
+
+            .lesson-intro {
+                padding: 1.5rem;
+            }
+
+            article {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="../index.html" class="logo">AI 新手第一步</a>
+            <a href="../course.html" class="back-link">← 回課程目錄</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="lesson-header">
+            <div class="lesson-number">第一課</div>
+            <h1 class="lesson-title">AI 到底是什麼？小老闆怎麼開始用？</h1>
+        </div>
+
+        <div class="lesson-intro">
+            你不用先懂 AI，也不用會寫程式。對小店老闆來說，AI 最重要的不是技術，而是它能不能幫你少花一點時間、少一點焦慮，把每天重複要做的事情變簡單。
+        </div>
+
+        <article>
+            <h2>這一課你會學到</h2>
+            <ul>
+                <li>AI 到底可以幫你做什麼</li>
+                <li>小老闆最適合從哪些工作開始</li>
+                <li>第一個可以直接複製使用的 Prompt</li>
+            </ul>
+
+            <h2>AI 不是魔法，它比較像一個助理</h2>
+            <p>
+                如果你想像 AI 是一個無所不能的機器，那你會失望。但如果你把它看成一個「很快的助理」，什麼事都願意做，只要你說得清楚，它就能幫忙，那你會發現 AI 其實滿實用的。
+            </p>
+            <p>
+                AI 可以協助你：
+            </p>
+            <ul>
+                <li><strong>寫貼文文案</strong> — 從一句話變成一篇完整的 Facebook 或 Instagram 貼文</li>
+                <li><strong>整理文字</strong> — 把雜亂的筆記變成清楚的條列式內容</li>
+                <li><strong>想標題和開場</strong> — 為你的文案、課程、商品想出吸引人的標題</li>
+                <li><strong>回覆客人常見問題</strong> — 整理客人常問的問題，AI 可以幫你寫出標準回覆</li>
+                <li><strong>整理課程內容</strong> — 把你的課程大綱擴展成完整的課程介紹</li>
+                <li><strong>規劃網站文案</strong> — 為你的首頁、產品頁、關於我們等頁面想文案</li>
+            </ul>
+            <p>
+                但記住：AI 需要你給它清楚的任務，它才會給你比較好的結果。「幫我寫個貼文」和「幫我為我的烘焙坊寫一篇介紹巧克力馬卡龍的 Instagram 貼文，語氣要溫暖，要突出手工製作的用心」，結果會差很多。
+            </p>
+
+            <h2>小老闆可以先從這 5 件事開始</h2>
+            <ol>
+                <li><strong>寫 Facebook / Instagram 貼文</strong> — 最快看到效果的工作</li>
+                <li><strong>回覆客人常見問題</strong> — 整理成標準回覆，下次直接用</li>
+                <li><strong>整理商品介紹</strong> — 把商品賣點變成吸引人的文案</li>
+                <li><strong>想活動文案</strong> — 每次活動都要想新文案，AI 可以幫忙出題目</li>
+                <li><strong>規劃網站首頁內容</strong> — 想不出怎麼介紹自己的品牌，AI 可以給你靈感</li>
+            </ol>
+
+            <h2>今日練習：寫出你的第一段品牌介紹</h2>
+            <p>
+                現在，請你打開 ChatGPT（或任何 AI 工具），複製下面這段 Prompt，改填入你自己的店名和特色，然後貼進去看結果。
+            </p>
+
+            <div class="practice-box">
+                <h3>📌 複製這段 Prompt</h3>
+                <div class="prompt-code">你是一位懂小型品牌經營的文案助理。
+請幫我為我的店整理一段簡單、親切、適合放在 Facebook 的品牌介紹。
+
+我的店是：[請填入店名]
+我主要販售：[請填入商品]
+我的特色是：[請填入特色，比如：手工製作、用在地食材、每週新菜單]
+目標客人是：[請填入客人類型，比如：上班族、媽媽、設計師]
+
+請用繁體中文，語氣溫暖、自然，不要太誇張。長度大約 50-80 字。</div>
+            </div>
+
+            <p>
+                試試看吧。把這段複製進去，改填你自己的資訊，看看 AI 給你什麼結果。
+            </p>
+
+            <h2>結尾</h2>
+            <p>
+                今天你只需要完成一件事：試著讓 AI 幫你寫出第一段品牌介紹。
+            </p>
+            <p>
+                不用完美。寫出來以後，你可能會覺得「嗯，有點接近，但還是要改」，那就對了。這時候你就知道 AI 是在幫你，不是取代你。
+            </p>
+            <p>
+                下一課，我們會學怎麼把問題問得更清楚，讓 AI 不再回答得很空泛。等著看吧。
+            </p>
+
+            <div class="lesson-nav">
+                <a href="../course.html" class="btn btn-secondary">← 回課程目錄</a>
+                <a href="lesson-2.html" class="btn btn-primary">下一課：怎麼問 AI 才會得到好答案？→</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AI 新手第一步 | 第 1 課</p>
+    </footer>
+</body>
+</html>

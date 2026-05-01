@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程總覽 - AI 新手第一步</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: #FAF7F3;
+            color: #3C3C3C;
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #3C3C3C;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #999;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #F4B63F;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .course-header h1 {
+            font-size: 2.2rem;
+            color: #2C2C2C;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .course-header p {
+            font-size: 1.05rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-number-badge {
+            background: linear-gradient(135deg, #F4B63F 0%, #D8913F 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .lesson-info {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-info h3 {
+            font-size: 1.2rem;
+            color: #2C2C2C;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .lesson-info p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .lesson-link {
+            display: inline-block;
+            color: #F4B63F;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .lesson-link:hover {
+            color: #D8913F;
+        }
+
+        /* Navigation */
+        .course-nav {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #E8E8E8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #F4B63F;
+            color: #2C2C2C;
+        }
+
+        .btn-primary:hover {
+            background: #D8913F;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #E8E8E8;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .course-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .course-header p {
+                font-size: 0.95rem;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lesson-number-badge {
+                padding: 1.5rem;
+                font-size: 2rem;
+            }
+
+            .lesson-info {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-inner {
+                padding: 0 1rem;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .course-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .lesson-info h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">AI 新手第一步</a>
+            <a href="index.html" class="back-link">← 回首頁</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="course-header">
+            <h1>AI 新手入門課程</h1>
+            <p>這是一套給小老闆與完全新手看的 AI 入門課。不需要技術背景，也不需要先懂英文。只要願意一步一步練習，你就可以開始用 AI 改變你的工作方式。</p>
+        </div>
+
+        <div class="course-grid">
+            <!-- Lesson 1 -->
+            <a href="lessons/lesson-1.html" class="lesson-card">
+                <div class="lesson-number-badge">1</div>
+                <div class="lesson-info">
+                    <h3>AI 到底是什麼？小老闆怎麼開始用？</h3>
+                    <p>不用會寫程式，也不用先懂技術。先學會把 AI 當作一個助理，看它能幫你做什麼。</p>
+                    <span class="lesson-link">進入課程 →</span>
+                </div>
+            </a>
+
+            <!-- Lesson 2 -->
+            <a href="lessons/lesson-2.html" class="lesson-card">
+                <div class="lesson-number-badge">2</div>
+                <div class="lesson-info">
+                    <h3>怎麼問 AI 才會得到好答案？</h3>
+                    <p>學會寫出清楚的 Prompt，讓 AI 理解你真正想要什麼。一句話的差距，結果可能差十倍。</p>
+                    <span class="lesson-link">進入課程 →</span>
+                </div>
+            </a>
+
+            <!-- Lesson 3 -->
+            <a href="lessons/lesson-3.html" class="lesson-card">
+                <div class="lesson-number-badge">3</div>
+                <div class="lesson-info">
+                    <h3>用 AI 寫出一篇小店貼文</h3>
+                    <p>用 AI 寫 Facebook 和 Instagram 貼文。不再卡在空白螢幕，五分鐘產出一篇初稿。</p>
+                    <span class="lesson-link">進入課程 →</span>
+                </div>
+            </a>
+
+            <!-- Lesson 4 -->
+            <a href="lessons/lesson-4.html" class="lesson-card">
+                <div class="lesson-number-badge">4</div>
+                <div class="lesson-info">
+                    <h3>用 AI 整理商品介紹與客服回覆</h3>
+                    <p>讓 AI 幫你整理商品資訊、寫出吸引人的描述、回覆客人常見問題。省時又省力。</p>
+                    <span class="lesson-link">進入課程 →</span>
+                </div>
+            </a>
+
+            <!-- Lesson 5 -->
+            <a href="lessons/lesson-5.html" class="lesson-card">
+                <div class="lesson-number-badge">5</div>
+                <div class="lesson-info">
+                    <h3>用 AI 規劃你的第一個網站首頁</h3>
+                    <p>用 AI 幫你想網站文案、規劃首頁結構。把自己的品牌故事說得清楚又吸引人。</p>
+                    <span class="lesson-link">進入課程 →</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="course-nav">
+            <a href="index.html" class="btn btn-primary">回到首頁</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AI 新手第一步 | 給完全初學者的 AI 課程</p>
+    </footer>
+</body>
+</html>

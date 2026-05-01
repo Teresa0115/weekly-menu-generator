@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 小老闆學堂 - 從零開始學 AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background-color: #FAF7F3;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+
+        /* Header / Navigation */
+        header {
+            background: white;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #E8E8E8;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+
+        nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: #2C2C2C;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #92ADA4;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #E6D5C0 0%, #FAF7F3 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2C2C2C;
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-highlight {
+            color: #92ADA4;
+            font-weight: 600;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: #E8A557;
+            color: white;
+            padding: 1.2rem 3.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 1rem;
+            box-shadow: 0 4px 12px rgba(232, 165, 87, 0.3);
+        }
+
+        .cta-primary:hover {
+            background: #D6925F;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(232, 165, 87, 0.4);
+        }
+
+        /* Categories Section */
+        .categories {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2C2C2C;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #92ADA4;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2C2C2C;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Who Is It For Section */
+        .for-who {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .for-who-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .audience-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: #E6D5C0;
+            border-radius: 6px;
+        }
+
+        .audience-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .audience-item p {
+            font-weight: 500;
+            color: #2C2C2C;
+        }
+
+        /* Courses Section */
+        .courses {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #92ADA4 0%, #B5D0D0 100%);
+            padding: 2rem;
+            color: white;
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .course-card h3 {
+            font-size: 1.3rem;
+            color: white;
+            margin: 0;
+        }
+
+        .course-body {
+            padding: 1.5rem;
+        }
+
+        .course-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #999;
+            padding-top: 1rem;
+            border-top: 1px solid #E8E8E8;
+        }
+
+        .course-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #E8E8E8;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .course-btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s, color 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .course-btn-primary {
+            background: #E8A557;
+            color: white;
+        }
+
+        .course-btn-primary:hover {
+            background: #D6925F;
+        }
+
+        .course-btn-secondary {
+            background: white;
+            color: #E8A557;
+            border: 1.5px solid #E8A557;
+        }
+
+        .course-btn-secondary:hover {
+            background: #FEF6F0;
+        }
+
+        /* About Section */
+        .about {
+            background: #E6D5C0;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2C2C2C;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 300px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCC;
+            font-size: 3rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #E8A557 0%, #D6925F 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            background: white;
+            color: #E8A557;
+            padding: 1.2rem 3.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(232, 165, 87, 0.2);
+        }
+
+        .cta-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(232, 165, 87, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid #E8E8E8;
+            padding: 2rem;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .category-grid,
+            .course-grid,
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">AI 小老闆學堂</div>
+            <nav>
+                <a href="#courses">課程</a>
+                <a href="#about">關於我</a>
+                <a href="#contact">聯絡</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>不是不會用 AI<br><span class="hero-highlight">是不知道第一步在哪裡</span></h1>
+            <p class="hero-subtitle">
+                幫助小老闆、店家、創作者<br>
+                用 ChatGPT、Claude、AI 工具<br>
+                做出網站、文案、商品圖與管理流程
+            </p>
+            <a href="#courses" class="cta-primary">免費學第一課</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <h2 class="section-title">我們教什麼</h2>
+
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-icon">💬</div>
+                <h3>ChatGPT 基礎</h3>
+                <p>從零開始，學會如何問 AI、寫 Prompt、快速產出文案和想法</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">⚙️</div>
+                <h3>Claude Code</h3>
+                <p>不用寫程式，用 AI 幫你做網站、表格、工具，甚至修 Bug</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🎨</div>
+                <h3>AI 圖片工具</h3>
+                <p>用 Midjourney、DALL-E 製作商品圖、貼文圖、廣告素材</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🎬</div>
+                <h3>AI 影片工具</h3>
+                <p>快速剪輯、字幕、配音，做出質感 Reels 和短影音</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Is It For -->
+    <section class="for-who">
+        <div class="for-who-container">
+            <h2 class="section-title">這個課程適合誰</h2>
+
+            <div class="audience-grid">
+                <div class="audience-item">
+                    <div class="audience-icon">🧁</div>
+                    <p>甜點店老闆</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">🍽️</div>
+                    <p>餐飲業者</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">🎨</div>
+                    <p>個人創作者</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">💼</div>
+                    <p>自由工作者</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">👥</div>
+                    <p>志工團隊</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">🏢</div>
+                    <p>小型企業</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
+        <h2 class="section-title">第一批課程</h2>
+        <p class="section-subtitle">從最基礎、最實用的開始</p>
+
+        <div class="course-grid">
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>AI 從 0 開始</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        不會英文、不會打字也沒關係。學會怎麼跟 AI 講話、讓 AI 真正幫到你
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 3 小時</span>
+                        <span>👤 初級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>Prompt 寫法</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        同樣的問題，不同的問法得到完全不同的答案。掌握 Prompt 就掌握 AI
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 2 小時</span>
+                        <span>👤 初級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>用 AI 做網站</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        無需代碼，用 Claude Code 一步步做出自己的網站（實際案例示範）
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 4 小時</span>
+                        <span>👤 中級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>做商品圖</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        用 AI 快速生成商品圖、展示圖，省時又省錢。從拍照到上架
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 2.5 小時</span>
+                        <span>👤 初級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>寫出吸睛貼文</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        讓 AI 幫你寫文案、改文案，貼文從無聊變吸引人的秘訣
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 2 小時</span>
+                        <span>👤 初級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <h3>表格 & 工具</h3>
+                </div>
+                <div class="course-body">
+                    <p class="course-desc">
+                        用 AI 做訂單表、進銷存、薪資表，管理再也不亂
+                    </p>
+                    <div class="course-meta">
+                        <span>⏱️ 3 小時</span>
+                        <span>👤 初級</span>
+                    </div>
+                </div>
+                <div class="course-footer">
+                    <a href="#" class="course-btn course-btn-primary">開始學習</a>
+                    <a href="#" class="course-btn course-btn-secondary">了解更多</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <h2 class="section-title">關於我</h2>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>不是工程師<br>是真的在用 AI 做生意的小店老闆</h2>
+                    <p>
+                        我不是科技人，沒有程式背景，就是在經營小事業時，發現 AI 可以做很多事。
+                    </p>
+                    <p>
+                        靠著 ChatGPT、Claude Code、AI 圖片工具，我自己做出了網站、管理工具、商品圖。不花一分錢找設計師或工程師。
+                    </p>
+                    <p>
+                        這堂課就是我真實的經歷。我會教你實際怎麼用、踩過的坑、最快最有效的方法。
+                    </p>
+                </div>
+                <div class="about-image">
+                    📸
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>準備好改變你的工作方式了嗎？</h2>
+        <p>不用會程式、不用花大錢，AI 可以幫你做很多</p>
+        <a href="#courses" class="cta-secondary">免費學第一課</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 AI 小老闆學堂 | 幫助小店老闆用 AI 做出更多事</p>
+    </footer>
+</body>
+</html>
