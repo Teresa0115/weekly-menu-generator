@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一課｜AI 到底是什麼？小老闆怎麼開始用？</title>
+    <style>
+        :root {
+            --bg: #fffaf3;
+            --card: #ffffff;
+            --text: #2b2b2b;
+            --muted: #666666;
+            --main: #f2b66d;
+            --main-dark: #d8913f;
+            --soft: #fff0dc;
+            --border: #ead7bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--main);
+        }
+
+        /* Container */
+        .container {
+            width: min(900px, 90%);
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        /* Content */
+        .content {
+            padding: 3rem 0;
+        }
+
+        .article {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-intro {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            padding: 1.5rem;
+            background: var(--soft);
+            border-left: 4px solid var(--main);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .article-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .article-section h2 {
+            font-size: 1.4rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--soft);
+        }
+
+        .article-section p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .article-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+
+        .article-section li {
+            padding: 0.6rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+            color: var(--text);
+        }
+
+        .article-section li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--main);
+            font-weight: bold;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .practice-box h3 {
+            color: var(--main-dark);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-box p {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        /* Prompt Code Block */
+        .prompt-code {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #333;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .prompt-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.95rem 1.8rem;
+            background: linear-gradient(135deg, var(--main) 0%, var(--main-dark) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(242, 182, 109, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: var(--text);
+            border: 2px solid var(--main);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--soft);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .nav-button a {
+            display: inline-block;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-button a:hover {
+            color: var(--main);
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            .article {
+                padding: 2rem;
+                border-radius: 12px;
+            }
+
+            .article-section h2 {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 2rem 0 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .cta-section,
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .article {
+                padding: 1.5rem;
+            }
+
+            .practice-box {
+                padding: 1.5rem;
+            }
+
+            .article-intro {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="../course.html" class="back-link">← 回課程目錄</a>
+            <span class="logo">AI 新手第一步</span>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <div class="container">
+        <section class="hero">
+            <h1>第一課｜AI 到底是什麼？小老闆怎麼開始用？</h1>
+            <p>15 分鐘 • 適合完全新手</p>
+        </section>
+
+        <!-- Content -->
+        <section class="content">
+            <article class="article">
+                <!-- 開場 -->
+                <div class="article-intro">
+                    <strong>你不用先懂 AI，也不用會寫程式。</strong>對小店老闆來說，AI 最重要的不是技術，而是它能不能幫你少花一點時間、少一點焦慮，把每天重複要做的事情變簡單。
+                </div>
+
+                <!-- 這一課你會學到 -->
+                <div class="article-section">
+                    <h2>這一課你會學到</h2>
+                    <ul>
+                        <li>AI 到底可以幫你做什麼</li>
+                        <li>小老闆最適合從哪些工作開始</li>
+                        <li>第一個可以直接複製使用的 Prompt</li>
+                    </ul>
+                </div>
+
+                <!-- AI 不是魔法，它比較像一個助理 -->
+                <div class="article-section">
+                    <h2>AI 不是魔法，它比較像一個助理</h2>
+                    <p>
+                        想像你雇了一個助理，她很聰明，可以在幾秒鐘內完成工作，但有一個條件：
+                        <strong>你要給她清楚的指令。</strong>
+                    </p>
+                    <p>AI 就像這樣。它可以協助你：</p>
+                    <ul>
+                        <li><strong>整理文字</strong> — 把亂糟糟的想法變成整理好的文案</li>
+                        <li><strong>寫貼文</strong> — 為你的 Facebook 和 Instagram 產出初稿</li>
+                        <li><strong>想標題</strong> — 幫你的商品、課程或活動想出吸引人的名字</li>
+                        <li><strong>做客服回覆</strong> — 快速草擬客人常見問題的回答</li>
+                        <li><strong>整理課程內容</strong> — 把你的想法整理成清晰的課程大綱</li>
+                        <li><strong>規劃網站文案</strong> — 為你的品牌網站產出內容框架</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">
+                        <strong>但也要提醒你：</strong>AI 需要你給它清楚的任務，它才會給你比較好的結果。
+                        如果你只是問 "幫我寫文案"，可能會得到很空泛的答案。
+                        但如果你說 "幫我寫一篇給小老闆的貼文，說明我用 AI 如何節省時間"，你就能得到更具體的內容。
+                    </p>
+                </div>
+
+                <!-- 小老闆可以先從這 5 件事開始 -->
+                <div class="article-section">
+                    <h2>小老闆可以先從這 5 件事開始</h2>
+                    <p>不用學得很深，先用在實際工作上。最快看到效果的方法是：</p>
+                    <ul>
+                        <li><strong>寫 Facebook / Instagram 貼文</strong> — 最快見效，一個貼文 2-3 分鐘</li>
+                        <li><strong>回覆客人常見問題</strong> — 省時間，保持客服回答的一致性</li>
+                        <li><strong>整理商品介紹</strong> — 把你的想法變成販售文案</li>
+                        <li><strong>想活動文案</strong> — 促銷、新商品推介、限時活動都適用</li>
+                        <li><strong>規劃網站首頁內容</strong> — 給設計師或自己參考的架構</li>
+                    </ul>
+                </div>
+
+                <!-- 今日練習 -->
+                <div class="article-section">
+                    <h2>今日練習：寫你的第一個 Prompt</h2>
+                    <p>請使用者打開 ChatGPT（免費版就可以），複製以下 Prompt，填入你的店家資訊：</p>
+
+                    <div class="practice-box">
+                        <h3>🎯 你的練習任務</h3>
+                        <p>
+                            1. 打開 <a href="https://chat.openai.com" target="_blank" style="color: var(--main); text-decoration: underline;">ChatGPT</a><br>
+                            2. 複製下面的指令<br>
+                            3. 填入你的店家資訊（用方括號 [ ] 標示的部分）<br>
+                            4. 按 Enter，看 AI 給你什麼結果
+                        </p>
+                    </div>
+
+                    <div class="prompt-label">📝 複製這個 Prompt</div>
+                    <div class="prompt-code">你是一位懂小型品牌經營的文案助理。
+請幫我為我的店整理一段簡單、親切、適合放在 Facebook 的品牌介紹。
+
+我的店是：[請填入店名]
+我主要販售：[請填入商品]
+我的特色是：[請填入特色]
+目標客人是：[請填入客人類型]
+
+請用繁體中文，語氣溫暖、自然，不要太誇張。</div>
+
+                    <div class="practice-box" style="margin-top: 2rem;">
+                        <h3>💡 怎麼填？舉個例子</h3>
+                        <div class="prompt-code" style="background: #f0f0f0; border-color: #ddd;">我的店是：Nosif Pastry（手工法式鹹派）
+我主要販售：新鮮製作的法式鹹派、可頌和麵包
+我的特色是：每天新鮮製作，使用天然食材，低糖少油
+目標客人是：上班族、媽媽、重視食物品質的人</div>
+                    </div>
+                </div>
+
+                <!-- 結尾 -->
+                <div class="article-section">
+                    <h2>今天就試試看</h2>
+                    <p>
+                        <strong>今天你只需要完成一件事：試著讓 AI 幫你寫出第一段品牌介紹。</strong>
+                    </p>
+                    <p>
+                        不用完美，也不用馬上用。重要的是體驗 AI 能多快地把你模糊的想法變成可用的文案。
+                    </p>
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>下一課的預告：</strong>下一課，我們會學怎麼把問題問得更清楚，讓 AI 不再回答得很空泛。你會發現，一句指令的差別，有時候能讓結果從 50 分提升到 90 分。
+                    </p>
+                </div>
+
+                <!-- CTA and Navigation -->
+                <div class="cta-section">
+                    <a href="../course.html" class="cta-button secondary">← 回課程目錄</a>
+                    <a href="lesson-2.html" class="cta-button">下一課 →</a>
+                </div>
+
+                <!-- Lesson Navigation -->
+                <div class="nav-buttons">
+                    <div class="nav-button">
+                        <span class="nav-label">← 上一課</span>
+                        <span style="color: var(--muted); font-size: 0.9rem;">（這是第一課）</span>
+                    </div>
+                    <div class="nav-button">
+                        <span class="nav-label">下一課 →</span>
+                        <a href="lesson-2.html">怎麼問 AI 才會得到好答案？</a>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 AI 新手第一步。Teresa 出品。</p>
+    </footer>
+</body>
+</html>

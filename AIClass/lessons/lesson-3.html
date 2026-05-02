@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三課｜用 AI 寫出一篇小店貼文</title>
+    <style>
+        :root {
+            --bg: #fffaf3;
+            --card: #ffffff;
+            --text: #2b2b2b;
+            --muted: #666666;
+            --main: #f2b66d;
+            --main-dark: #d8913f;
+            --soft: #fff0dc;
+            --border: #ead7bd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        header {
+            background: white;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .back-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--main);
+        }
+
+        .container {
+            width: min(900px, 90%);
+            margin: 0 auto;
+        }
+
+        .hero {
+            padding: 3rem 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .content {
+            padding: 3rem 0;
+        }
+
+        .article {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .coming-soon {
+            font-size: 1.2rem;
+            color: var(--muted);
+            padding: 3rem 0;
+        }
+
+        .coming-soon-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .nav-button a {
+            display: inline-block;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-button a:hover {
+            color: var(--main);
+        }
+
+        .nav-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 0.95rem 1.8rem;
+            background: linear-gradient(135deg, var(--main) 0%, var(--main-dark) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(242, 182, 109, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: var(--text);
+            border: 2px solid var(--main);
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--soft);
+        }
+
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .article {
+                padding: 2rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-inner">
+            <a href="../course.html" class="back-link">← 回課程目錄</a>
+            <span class="logo">AI 新手第一步</span>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <div class="container">
+        <section class="hero">
+            <h1>第三課｜用 AI 寫出一篇小店貼文</h1>
+            <p>15-20 分鐘 • 實作練習</p>
+        </section>
+
+        <!-- Content -->
+        <section class="content">
+            <article class="article">
+                <div class="coming-soon-emoji">📝</div>
+                <div class="coming-soon">
+                    <p><strong>本課內容整理中</strong></p>
+                    <p style="margin-top: 1rem; font-size: 0.95rem;">我們正在準備這堂課的完整內容。<br>敬請期待！</p>
+                </div>
+
+                <!-- Navigation -->
+                <div class="nav-buttons">
+                    <div class="nav-button">
+                        <span class="nav-label">← 上一課</span>
+                        <a href="lesson-2.html">怎麼問 AI 才會得到好答案？</a>
+                    </div>
+                    <div class="nav-button">
+                        <span class="nav-label">下一課 →</span>
+                        <a href="lesson-4.html">用 AI 整理商品介紹與客服回覆</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <a href="../course.html" class="cta-button secondary" style="width: 100%; text-align: center;">← 回課程目錄</a>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 AI 新手第一步。Teresa 出品。</p>
+    </footer>
+</body>
+</html>

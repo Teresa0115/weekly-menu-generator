@@ -27,7 +27,7 @@ const server = http.createServer(async (req, res) => {
 
         // 計算圖片高度（依內容多寡調整）
         const totalItems = categories.reduce((sum, cat) => sum + cat.items.length, 0);
-        const height = Math.max(630, 320 + categories.length * 50 + totalItems * 30);
+        const height = Math.max(900, 500 + categories.length * 100 + totalItems * 60);
 
         let template = fs.readFileSync(path.join(__dirname, 'weekly_menu_template.html'), 'utf8');
         const injection = `<script>
@@ -47,8 +47,7 @@ const server = http.createServer(async (req, res) => {
         await page.setViewport({ width: 1200, height });
         await page.goto(`file:///${tmpFile}`, { waitUntil: 'networkidle0' });
         const screenshot = await page.screenshot({
-          fullPage: false,
-          clip: { x: 0, y: 0, width: 1200, height }
+          fullPage: true
         });
 
         // 儲存到檔案系統並返回 Base64 用於下載
