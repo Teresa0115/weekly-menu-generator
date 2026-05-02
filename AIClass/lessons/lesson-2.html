@@ -230,101 +230,211 @@
             <article class="article">
                 <!-- 開場 -->
                 <div class="article-intro">
-                    <strong>第一課你學會了怎麼開始用 AI，但你可能發現一個問題：</strong>有時候 AI 的回答不錯，有時候卻很空泛。差別在哪裡？就在於你怎麼「問」。
+                    <strong>真實情況：</strong>同樣的工作，不同的問法，結果差很多。今天我們用實際案例來看，怎麼問 AI 才能得到好答案。
                 </div>
 
-                <!-- 這一課你會學到 -->
+                <!-- 真實案例 -->
                 <div class="article-section">
-                    <h2>這一課你會學到</h2>
-                    <ul>
-                        <li>為什麼同一個問題，結果差這麼多</li>
-                        <li>怎麼寫指令才能得到更好的回答</li>
-                        <li>3 個實用的提示詞技巧</li>
-                    </ul>
+                    <h2>案例：經營小咖啡館的 Amy</h2>
+                    <p>
+                        <strong>背景：</strong>Amy 經營一家小咖啡館「晨光咖啡」，每天要寫 Facebook 貼文、回覆客人、整理菜單。
+                        最近她決定用 AI 幫忙寫貼文，但第一次試的結果讓她很失望...
+                    </p>
                 </div>
 
-                <!-- AI 聽不懂的問題 -->
+                <!-- 第一次：問得不清楚 -->
                 <div class="article-section">
-                    <h2>先看看 AI 怎麼回答</h2>
-                    <p>比較這兩個問題的結果：</p>
+                    <h2>❌ 第一次：Amy 問得不清楚</h2>
+                    <p><strong>Amy 的問題：</strong></p>
+                    <div class="prompt-code">幫我寫今天的咖啡館貼文</div>
+
+                    <p style="margin: 1.5rem 0 1rem;"><strong>ChatGPT 的回答：</strong></p>
+                    <div style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 0.9rem;">
+<pre>歡迎來到我們的咖啡館。我們提供各種優質咖啡和
+糕點。今天營業時間為上午8點至晚上8點。
+
+我們有專業的咖啡師團隊，致力於為您提供最好
+的服務。歡迎蒞臨。</pre>
+                    </div>
+
+                    <p style="color: var(--muted); padding: 1rem; background: var(--soft); border-left: 4px solid #d8913f; border-radius: 8px;">
+                        <strong>Amy 的評價：</strong>「這太生硬了，一點也不像我的風格，根本不會吸引人。」
+                    </p>
+                </div>
+
+                <!-- 第二次：Amy 改進問法 -->
+                <div class="article-section">
+                    <h2>✅ 第二次：Amy 改進了問法</h2>
+                    <p><strong>Amy 新的問題：</strong></p>
+                    <div class="prompt-code">我經營小咖啡館「晨光咖啡」，每天早上 8 點開門。
+今天是週五，我想發一篇 Facebook 貼文宣傳新來的
+肉桂卷。
+
+店的特色：
+- 咖啡是自己烘焙的
+- 氛圍溫暖舒服，很多上班族在這裡工作
+- 肉桂卷剛烤好，還熱的
+
+請幫我寫一篇貼文（100-150 字），語氣要親切溫暖，
+像朋友推薦一樣。可以加 emoji。</div>
+
+                    <p style="margin: 1.5rem 0 1rem;"><strong>ChatGPT 的回答：</strong></p>
+                    <div style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 0.9rem;">
+<pre>早安呀！☀️ 今天剛出爐的肉桂卷來了！
+
+咬下去的時候，軟軟香香的，肉桂的香氣撲鼻而來。
+配一杯我們自己烘焙的咖啡？ 完美組合啦 ☕
+
+週五早上總是有點疲憊對吧？來晨光坐坐，享受一
+個溫暖的早晨。肉桂卷只有今天有喔，賣完就沒了。
+
+晨光咖啡，8 點開門等你 💕</pre>
+                    </div>
+
+                    <p style="color: var(--muted); padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>Amy 的評價：</strong>「太好了！完全就是我想要的感覺，我只改了一個字就可以發了。」
+                    </p>
+                </div>
+
+                <!-- 對比分析 -->
+                <div class="article-section">
+                    <h2>對比：差在哪裡？</h2>
+                    <p style="margin: 1rem 0;">看看第一次和第二次的差別：</p>
                     <ul>
-                        <li><strong>不好的問法：</strong>「幫我寫文案」</li>
-                        <li><strong>好的問法：</strong>「我經營一個手工鹹派品牌，目標客人是上班族。請幫我寫一篇 Facebook 貼文，介紹我的新產品『菠菜起司鹹派』。語氣要溫暖親切，字數 80-120。」</li>
+                        <li><strong>第一次：</strong>「幫我寫貼文」— AI 不知道你要什麼，只能猜</li>
+                        <li><strong>第二次：</strong>告訴 AI 你的店、你的目標客人、你的風格 — AI 能準確理解</li>
                     </ul>
                     <p style="margin-top: 1rem;">
-                        試試看這兩種問法，你會發現第二個問法的結果明顯更有用。為什麼？因為 AI 需要清楚的「背景」、「目標」和「限制條件」。
+                        結果：第一次需要完全重寫，第二次只需要微調。
+                        <strong>差別就在：你給 AI 多少清楚的資訊。</strong>
                     </p>
                 </div>
 
-                <!-- 好指令的 3 個要素 -->
+                <!-- 解密：為什麼第二次更好 -->
                 <div class="article-section">
-                    <h2>好指令的 3 個要素</h2>
+                    <h2>解密：成功的指令有 3 個要素</h2>
 
                     <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
-                        <strong>1️⃣ 背景（Context）</strong><br>
-                        告訴 AI 你是誰，你在做什麼。
+                        <strong>要素 1：背景（Context）</strong><br>
+                        告訴 AI 你的店、你的客人、你的風格
                     </p>
-                    <p style="margin-left: 1rem; color: var(--muted);">
-                        例：「我經營一個小型烘焙品牌...」
-                    </p>
+                    <div style="margin-left: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 8px; border-left: 3px solid var(--main);">
+                        <strong>Amy 的例子：</strong><br>
+                        「我經營小咖啡館『晨光咖啡』，氛圍溫暖舒服，很多上班族在這裡工作」
+                    </div>
 
                     <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
-                        <strong>2️⃣ 任務（Task）</strong><br>
-                        清楚地說你要 AI 做什麼。
+                        <strong>要素 2：任務（Task）</strong><br>
+                        清楚說出你要 AI 做什麼，越具體越好
                     </p>
-                    <p style="margin-left: 1rem; color: var(--muted);">
-                        例：「請幫我寫一篇 Facebook 貼文...」（而不是籠統地說「寫文案」）
-                    </p>
+                    <div style="margin-left: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 8px; border-left: 3px solid var(--main);">
+                        <strong>Amy 的例子：</strong><br>
+                        「請幫我寫一篇 Facebook 貼文，宣傳今天新來的肉桂卷」<br>
+                        （不是籠統的「寫貼文」，而是「寫什麼貼文」）
+                    </div>
 
                     <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
-                        <strong>3️⃣ 限制條件（Constraints）</strong><br>
-                        告訴 AI 你的要求（語氣、字數、風格）。
+                        <strong>要素 3：限制條件（Constraints）</strong><br>
+                        告訴 AI 你要的風格、字數、語氣
                     </p>
-                    <p style="margin-left: 1rem; color: var(--muted);">
-                        例：「語氣要溫暖親切，字數 80-120...」
+                    <div style="margin-left: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 8px; border-left: 3px solid var(--main);">
+                        <strong>Amy 的例子：</strong><br>
+                        「語氣要親切溫暖，像朋友推薦一樣，字數 100-150，可以加 emoji」
+                    </div>
+                </div>
+
+                <!-- 實戰練習 1：修改一個爛指令 -->
+                <div class="article-section">
+                    <h2>實戰 1：你現在就試試看</h2>
+                    <p><strong>情景：</strong>王先生經營一間服飾店，要寫新衣服的介紹，他這樣問 ChatGPT：</p>
+
+                    <div class="prompt-label">❌ 王先生的爛指令</div>
+                    <div class="prompt-code">幫我寫商品介紹，這是一件黑色T恤</div>
+
+                    <p style="margin: 1.5rem 0 1rem;"><strong>ChatGPT 的回答（很無聊）：</strong></p>
+                    <div style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 0.9rem;">
+<pre>這是一件黑色T恤，由優質棉布製成。適合日常穿著。
+舒適、耐用、百搭。現在購買享優惠。</pre>
+                    </div>
+
+                    <p style="margin-top: 1rem;"><strong>王先生改進了指令：</strong></p>
+                    <div class="prompt-label">✅ 王先生改進後</div>
+                    <div class="prompt-code">我經營服飾店「都市風格」，目標客人是上班族（25-40歲）。
+我有一件新款黑色T恤，特色：
+- 日本進口竹纖維布料，很涼爽
+- 剪裁修身，適合男性或中性穿搭
+- 售價 890 元
+
+請寫商品介紹，要讓客人知道這件衣服為什麼值得買。
+語氣要現代專業，字數 80-120 字。</div>
+
+                    <p style="margin: 1.5rem 0 1rem;"><strong>ChatGPT 的新回答（好多了）：</strong></p>
+                    <div style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; line-height: 1.6; font-size: 0.9rem;">
+<pre>日本竹纖維製成，涼爽透氣，黏悶天氣的救星。修身
+剪裁拉長身形，上班、約會、日常都穿得出來。
+
+不只是一件T恤，是衣櫥裡的必備單品。舒服度和質
+感兼具，890 元很划算。</pre>
+                    </div>
+
+                    <p style="color: var(--muted); padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>差別：</strong>第一個回答很制式，第二個回答讓人想買。為什麼？因為 AI 知道了你的客人、產品特色、價位，能寫出有說服力的文案。
                     </p>
                 </div>
 
-                <!-- 實戰：改寫一個指令 -->
+                <!-- 3 個進階技巧 -->
                 <div class="article-section">
-                    <h2>實戰：改寫一個指令</h2>
-                    <p>如果你現在要 AI 幫你寫商品介紹，試試改寫成這樣：</p>
+                    <h2>3 個進階技巧，讓結果更好</h2>
 
-                    <div class="prompt-label">❌ 原本的問法</div>
-                    <div class="prompt-code">幫我寫商品介紹</div>
-
-                    <div class="prompt-label">✅ 改寫後</div>
-                    <div class="prompt-code">我經營一間咖啡館，我想要介紹一款新的單品咖啡「衣索比亞花蕾」。
-這款咖啡的特色是：酸度適中、有花香和果香、適合黑咖啡品飲。
-請幫我寫一段商品介紹，語氣要專業但不生硬，讓客人理解這款咖啡的特色。
-字數 100-150 字。</div>
-
-                    <p style="margin-top: 1.5rem; padding: 1rem; background: var(--soft); border-radius: 8px;">
-                        <strong>你看出差別了嗎？</strong>第二個版本告訴了 AI：
-                        <br>✓ 背景：你經營咖啡館<br>
-                        ✓ 任務：寫商品介紹<br>
-                        ✓ 限制：專業但不生硬，100-150 字
+                    <!-- 技巧 1 -->
+                    <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>技巧 1：給 AI 參考例子</strong>
                     </p>
-                </div>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">
+                        如果你知道什麼風格是你喜歡的，直接給 AI 看例子。AI 會模仿那個風格。
+                    </p>
+                    <div class="prompt-label">📝 例子</div>
+                    <div class="prompt-code">我要寫咖啡館的貼文。我喜歡這種風格：
+「早安，咖啡還熱著，你呢？」
 
-                <!-- 3 個小技巧 -->
-                <div class="article-section">
-                    <h2>3 個實用小技巧</h2>
+請用類似的簡潔、溫暖、有點調皮的語氣，
+幫我寫今天的貼文...</div>
 
-                    <p style="margin-bottom: 1.5rem;"><strong>技巧 1：給 AI 參考例子</strong></p>
-                    <p style="margin-bottom: 1rem; color: var(--muted);">告訴 AI 你想要什麼風格的文案，給它一個例子。</p>
-                    <div class="prompt-code" style="background: #f0f0f0;">例如，我希望文案的語氣像這樣：「每一口都能嚐到食材的溫度。」</div>
+                    <p style="margin: 1.5rem 0; padding: 1rem; background: #f0f0f0; border-radius: 8px;">
+                        <strong>效果：</strong>ChatGPT 會比對你的例子，寫出接近的風格，而不是猜。
+                    </p>
 
-                    <p style="margin: 2rem 0 1.5rem;"><strong>技巧 2：要求 AI 分步驟回答</strong></p>
-                    <p style="margin-bottom: 1rem; color: var(--muted);">有時候讓 AI 分步驟思考，結果會更好。</p>
-                    <div class="prompt-code" style="background: #f0f0f0;">請分三個步驟幫我：
-1. 首先分析這個商品的賣點
-2. 然後列出適合的受眾
-3. 最後寫出 Facebook 貼文</div>
+                    <!-- 技巧 2 -->
+                    <p style="margin: 2rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>技巧 2：要求 AI 分步驟回答</strong>
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">
+                        複雜的任務，讓 AI 分步做，每一步都會更精確。
+                    </p>
+                    <div class="prompt-label">📝 例子</div>
+                    <div class="prompt-code">請分三個步驟幫我：
+1. 首先，分析「手工起司蛋糕」的銷售賣點
+2. 然後，寫出適合哪種客人購買
+3. 最後，寫一篇 Instagram 貼文吸引他們</div>
 
-                    <p style="margin: 2rem 0 1.5rem;"><strong>技巧 3：如果結果不滿意，追問</strong></p>
-                    <p style="margin-bottom: 1rem; color: var(--muted);">不用每次重新開始，直接告訴 AI 你想要改什麼。</p>
-                    <div class="prompt-code" style="background: #f0f0f0;">這個不夠溫暖。請重寫，讓語氣更親切，像是朋友推薦給朋友一樣。</div>
+                    <p style="margin: 1.5rem 0; padding: 1rem; background: #f0f0f0; border-radius: 8px;">
+                        <strong>效果：</strong>結果會更有邏輯，每一段都經過思考。
+                    </p>
+
+                    <!-- 技巧 3 -->
+                    <p style="margin: 2rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>技巧 3：結果不滿意？立刻追問修改</strong>
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">
+                        不用重新開始，直接告訴 AI 你想改什麼。這樣快 10 倍。
+                    </p>
+                    <div class="prompt-label">📝 例子</div>
+                    <div class="prompt-code">這個貼文太企業風了。請重寫，讓語氣更親切、
+更有人情味，像是老闆親自和客人聊天一樣。</div>
+
+                    <p style="margin: 1.5rem 0; padding: 1rem; background: #f0f0f0; border-radius: 8px;">
+                        <strong>效果：</strong>AI 會用之前的內容做調整，很快就能得到你要的版本。
+                    </p>
                 </div>
 
                 <!-- 今日練習 -->
