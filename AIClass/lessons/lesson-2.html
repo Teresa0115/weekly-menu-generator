@@ -228,10 +228,132 @@
         <!-- Content -->
         <section class="content">
             <article class="article">
-                <div class="coming-soon-emoji">🎓</div>
-                <div class="coming-soon">
-                    <p><strong>本課內容整理中</strong></p>
-                    <p style="margin-top: 1rem; font-size: 0.95rem;">我們正在準備這堂課的完整內容。<br>敬請期待！</p>
+                <!-- 開場 -->
+                <div class="article-intro">
+                    <strong>第一課你學會了怎麼開始用 AI，但你可能發現一個問題：</strong>有時候 AI 的回答不錯，有時候卻很空泛。差別在哪裡？就在於你怎麼「問」。
+                </div>
+
+                <!-- 這一課你會學到 -->
+                <div class="article-section">
+                    <h2>這一課你會學到</h2>
+                    <ul>
+                        <li>為什麼同一個問題，結果差這麼多</li>
+                        <li>怎麼寫指令才能得到更好的回答</li>
+                        <li>3 個實用的提示詞技巧</li>
+                    </ul>
+                </div>
+
+                <!-- AI 聽不懂的問題 -->
+                <div class="article-section">
+                    <h2>先看看 AI 怎麼回答</h2>
+                    <p>比較這兩個問題的結果：</p>
+                    <ul>
+                        <li><strong>不好的問法：</strong>「幫我寫文案」</li>
+                        <li><strong>好的問法：</strong>「我經營一個手工鹹派品牌，目標客人是上班族。請幫我寫一篇 Facebook 貼文，介紹我的新產品『菠菜起司鹹派』。語氣要溫暖親切，字數 80-120。」</li>
+                    </ul>
+                    <p style="margin-top: 1rem;">
+                        試試看這兩種問法，你會發現第二個問法的結果明顯更有用。為什麼？因為 AI 需要清楚的「背景」、「目標」和「限制條件」。
+                    </p>
+                </div>
+
+                <!-- 好指令的 3 個要素 -->
+                <div class="article-section">
+                    <h2>好指令的 3 個要素</h2>
+
+                    <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>1️⃣ 背景（Context）</strong><br>
+                        告訴 AI 你是誰，你在做什麼。
+                    </p>
+                    <p style="margin-left: 1rem; color: var(--muted);">
+                        例：「我經營一個小型烘焙品牌...」
+                    </p>
+
+                    <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>2️⃣ 任務（Task）</strong><br>
+                        清楚地說你要 AI 做什麼。
+                    </p>
+                    <p style="margin-left: 1rem; color: var(--muted);">
+                        例：「請幫我寫一篇 Facebook 貼文...」（而不是籠統地說「寫文案」）
+                    </p>
+
+                    <p style="margin: 1.5rem 0 1rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>3️⃣ 限制條件（Constraints）</strong><br>
+                        告訴 AI 你的要求（語氣、字數、風格）。
+                    </p>
+                    <p style="margin-left: 1rem; color: var(--muted);">
+                        例：「語氣要溫暖親切，字數 80-120...」
+                    </p>
+                </div>
+
+                <!-- 實戰：改寫一個指令 -->
+                <div class="article-section">
+                    <h2>實戰：改寫一個指令</h2>
+                    <p>如果你現在要 AI 幫你寫商品介紹，試試改寫成這樣：</p>
+
+                    <div class="prompt-label">❌ 原本的問法</div>
+                    <div class="prompt-code">幫我寫商品介紹</div>
+
+                    <div class="prompt-label">✅ 改寫後</div>
+                    <div class="prompt-code">我經營一間咖啡館，我想要介紹一款新的單品咖啡「衣索比亞花蕾」。
+這款咖啡的特色是：酸度適中、有花香和果香、適合黑咖啡品飲。
+請幫我寫一段商品介紹，語氣要專業但不生硬，讓客人理解這款咖啡的特色。
+字數 100-150 字。</div>
+
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: var(--soft); border-radius: 8px;">
+                        <strong>你看出差別了嗎？</strong>第二個版本告訴了 AI：
+                        <br>✓ 背景：你經營咖啡館<br>
+                        ✓ 任務：寫商品介紹<br>
+                        ✓ 限制：專業但不生硬，100-150 字
+                    </p>
+                </div>
+
+                <!-- 3 個小技巧 -->
+                <div class="article-section">
+                    <h2>3 個實用小技巧</h2>
+
+                    <p style="margin-bottom: 1.5rem;"><strong>技巧 1：給 AI 參考例子</strong></p>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">告訴 AI 你想要什麼風格的文案，給它一個例子。</p>
+                    <div class="prompt-code" style="background: #f0f0f0;">例如，我希望文案的語氣像這樣：「每一口都能嚐到食材的溫度。」</div>
+
+                    <p style="margin: 2rem 0 1.5rem;"><strong>技巧 2：要求 AI 分步驟回答</strong></p>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">有時候讓 AI 分步驟思考，結果會更好。</p>
+                    <div class="prompt-code" style="background: #f0f0f0;">請分三個步驟幫我：
+1. 首先分析這個商品的賣點
+2. 然後列出適合的受眾
+3. 最後寫出 Facebook 貼文</div>
+
+                    <p style="margin: 2rem 0 1.5rem;"><strong>技巧 3：如果結果不滿意，追問</strong></p>
+                    <p style="margin-bottom: 1rem; color: var(--muted);">不用每次重新開始，直接告訴 AI 你想要改什麼。</p>
+                    <div class="prompt-code" style="background: #f0f0f0;">這個不夠溫暖。請重寫，讓語氣更親切，像是朋友推薦給朋友一樣。</div>
+                </div>
+
+                <!-- 今日練習 -->
+                <div class="article-section">
+                    <h2>今日練習</h2>
+                    <p>現在輪到你了。選擇你工作中的一個任務，試試看用「背景 + 任務 + 限制」的方式寫指令：</p>
+
+                    <div class="practice-box">
+                        <h3>🎯 你的練習任務</h3>
+                        <p><strong>第一步：</strong>想一個你常常做的工作（寫文案、整理資料、回覆客人...）</p>
+                        <p><strong>第二步：</strong>用 3 個要素寫出指令：<br>
+                        ✓ 我是... 我在做...<br>
+                        ✓ 請幫我...<br>
+                        ✓ 要求是...（語氣、字數、格式等）</p>
+                        <p><strong>第三步：</strong>把指令貼到 ChatGPT 試試看</p>
+                        <p><strong>第四步：</strong>如果結果不滿意，試試上面的 3 個技巧改進指令</p>
+                    </div>
+                </div>
+
+                <!-- 結尾 -->
+                <div class="article-section">
+                    <h2>下一課在做什麼</h2>
+                    <p>
+                        現在你已經知道怎麼問 AI 了。下一課，我們會把這個技能用在實戰上：
+                        <strong>用 AI 寫出一篇會吸引人的小店貼文。</strong>
+                    </p>
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        小提示：大部分人的第一個 AI 成果都不完美，但如果你會「改寫指令」，第二次就會好很多。這就是為什麼會寫指令很重要。
+                    </p>
                 </div>
 
                 <!-- Navigation -->

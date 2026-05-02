@@ -228,10 +228,168 @@
         <!-- Content -->
         <section class="content">
             <article class="article">
-                <div class="coming-soon-emoji">💬</div>
-                <div class="coming-soon">
-                    <p><strong>本課內容整理中</strong></p>
-                    <p style="margin-top: 1rem; font-size: 0.95rem;">我們正在準備這堂課的完整內容。<br>敬請期待！</p>
+                <!-- 開場 -->
+                <div class="article-intro">
+                    <strong>最浪費時間的工作，往往不是創意工作，而是重複工作。</strong>寫商品介紹、回覆客人常見問題、整理表單...這些事 AI 最擅長。用好了，你每週能省出 5-10 小時。
+                </div>
+
+                <!-- 這一課你會學到 -->
+                <div class="article-section">
+                    <h2>這一課你會學到</h2>
+                    <ul>
+                        <li>怎麼用 AI 快速整理商品介紹</li>
+                        <li>怎麼讓客服回覆保持一致的品牌聲音</li>
+                        <li>哪些重複工作可以交給 AI 做</li>
+                    </ul>
+                </div>
+
+                <!-- 小店常見的重複工作 -->
+                <div class="article-section">
+                    <h2>小店最常重複的 4 種工作</h2>
+                    <ul>
+                        <li><strong>商品介紹。</strong>每個商品要寫介紹，寫來寫去都差不多。</li>
+                        <li><strong>客人常見問題。</strong>「怎麼保存？」「可以客製化嗎？」「運費多少？」</li>
+                        <li><strong>Email 或訊息回覆。</strong>禮貌但重複的內容。</li>
+                        <li><strong>整理資訊。</strong>把客人的需求、訂單資訊整理成清晰的格式。</li>
+                    </ul>
+                </div>
+
+                <!-- 技巧 1：商品介紹 -->
+                <div class="article-section">
+                    <h2>技巧 1：快速產出商品介紹</h2>
+                    <p>問題：手動寫 10 個商品介紹要花 1 小時，寫起來很累。</p>
+                    <p style="margin-top: 1rem; margin-bottom: 1rem;"><strong>解法：</strong>給 AI 一個「模板」，它幫你批量產出，然後你微調。</p>
+
+                    <div class="prompt-label">📝 複製這個 Prompt</div>
+                    <div class="prompt-code">我需要為我的 [店名] 寫商品介紹。請根據以下資訊，幫我寫出 5 個商品的介紹。
+
+每個商品介紹要：
+- 商品名稱
+- 1-2 句簡單介紹（說明商品是什麼、有什麼特色）
+- 口感或風味描述
+- 適合的食用方式或場景
+- 保存方式（簡短）
+
+格式要整齊，方便我之後複製貼上到網站或社群。
+
+商品清單：
+1. [商品名] - [一句說明]
+2. [商品名] - [一句說明]
+3. [商品名] - [一句說明]
+（以此類推...）
+
+語氣要溫暖專業，不要太誇張。</div>
+
+                    <p style="margin-top: 1.5rem;"><strong>貼士：</strong>如果你有多個商品類別（鹹派、可頌、麵包...），分別寫 3 個 Prompt，比一次寫 20 個要好得多。</p>
+                </div>
+
+                <!-- 技巧 2：客服回覆模板 -->
+                <div class="article-section">
+                    <h2>技巧 2：建立客服回覆模板</h2>
+                    <p>問題：客人問「怎麼保存？」「可以退貨嗎？」每次都要重新回覆。</p>
+                    <p style="margin-top: 1rem; margin-bottom: 1rem;"><strong>解法：</strong>讓 AI 幫你產出常見問題的回答，存起來直接用。</p>
+
+                    <div class="prompt-label">📝 複製這個 Prompt</div>
+                    <div class="prompt-code">我經營 [店名]，賣 [商品]。請幫我寫出以下常見問題的回答。
+
+每個回答要：
+- 直接、清楚、不超過 80 字
+- 語氣親切專業
+- 如果需要操作步驟，用清單列出
+
+常見問題：
+1. 怎麼保存？
+2. 可以寄送嗎？運費多少？
+3. 可以客製化 / 特殊需求嗎？
+4. 怎麼確認訂單？
+5. 有退貨或換貨的機制嗎？
+
+請為每個問題寫一個回答，我會直接複製貼上給客人。</div>
+
+                    <p style="margin-top: 1.5rem;"><strong>進階用法：</strong>把這些回答存在一個文件裡，客人問問題時，你複製對應的回答，再加一句個人化的問候，既快又溫暖。</p>
+                </div>
+
+                <!-- 技巧 3：整理複雜資訊 -->
+                <div class="article-section">
+                    <h2>技巧 3：用 AI 整理複雜的資訊</h2>
+                    <p>問題：客人用 Line、email、表單傳來的訊息零散，很難整理。</p>
+                    <p style="margin-top: 1rem; margin-bottom: 1rem;"><strong>解法：</strong>把原始資訊貼給 AI，讓它幫你整理成清晰的格式。</p>
+
+                    <div class="prompt-label">📝 複製這個 Prompt</div>
+                    <div class="prompt-code">我收到客人的訂單資訊（可能很亂），請幫我整理成清晰的格式。
+
+原始訊息：
+[貼上客人的訊息]
+
+請整理成：
+- 客人名字：
+- 聯絡方式：
+- 訂購商品：[商品名 × 數量，商品名 × 數量...]
+- 交付方式：（自取 / 宅配 / 其他）
+- 特殊需求或備註：
+- 預算 / 定價：
+
+如果某些資訊不清楚，請指出來。</div>
+
+                    <p style="margin-top: 1.5rem;"><strong>用途：</strong>每次收到新訂單，直接貼進來整理，再也不用手動抄寫了。</p>
+                </div>
+
+                <!-- 技巧 4：保持品牌聲音一致 -->
+                <div class="article-section">
+                    <h2>技巧 4：讓所有回覆保持品牌聲音</h2>
+                    <p>問題：不同人回覆客人，語氣和風格不一致。</p>
+                    <p style="margin-top: 1rem; margin-bottom: 1rem;"><strong>解法：</strong>告訴 AI 你的品牌聲音是什麼，讓它幫你寫回覆。</p>
+
+                    <div class="prompt-label">📝 複製這個 Prompt</div>
+                    <div class="prompt-code">我的品牌 [品牌名] 的聲音是：[描述，例如：溫暖親切、幽默輕鬆、專業正式...]
+
+例句：「[你想要的語氣範例]」
+
+現在有個客人寫：[客人的訊息]
+
+請用我們的品牌聲音回覆，回覆長度 100-150 字。要讓客人感到被重視。</div>
+
+                    <p style="margin-top: 1.5rem;"><strong>進階用法：</strong>為你的團隊建立一個「品牌聲音指南」，這樣每個人都能用 AI 產出風格一致的回覆。</p>
+                </div>
+
+                <!-- 每週能省多少時間 -->
+                <div class="article-section">
+                    <h2>用 AI 可以省多少時間？</h2>
+                    <p style="margin-bottom: 1.5rem;">以一個有 20 個商品、每週 50 個客人訊息的小店為例：</p>
+                    <ul>
+                        <li><strong>商品介紹：</strong>手動寫需要 5 小時 → AI 幫忙 30 分鐘（包括修改）</li>
+                        <li><strong>客服回覆：</strong>手動需要 3 小時 / 週 → AI 加快到 45 分鐘</li>
+                        <li><strong>訂單整理：</strong>手動需要 1 小時 / 週 → AI 10 分鐘</li>
+                        <li><strong>總共省時：</strong>每週省出 6-7 小時</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; padding: 1rem; background: var(--soft); border-left: 4px solid var(--main); border-radius: 8px;">
+                        <strong>算算看：</strong>一週省 7 小時 × 52 週 = 364 小時 = 約 45 個工作天。想像能多做多少事！
+                    </p>
+                </div>
+
+                <!-- 今日練習 -->
+                <div class="article-section">
+                    <h2>今日練習</h2>
+                    <p>選一個你最常重複的工作，試試看用 AI 來處理。</p>
+
+                    <div class="practice-box">
+                        <h3>🎯 你的練習任務</h3>
+                        <p><strong>選一個任務：</strong>寫 3-5 個商品介紹 / 或寫 5 個常見問題回答 / 或整理一份亂訊息</p>
+                        <p><strong>複製上面的 Prompt</strong>，改成你的資訊</p>
+                        <p><strong>貼到 ChatGPT 看結果</strong></p>
+                        <p><strong>計時一下：</strong>用 AI 花多少時間 vs 手動要花多少時間</p>
+                        <p><strong>修改結果</strong>，讓它完全符合你的需求</p>
+                    </div>
+                </div>
+
+                <!-- 結尾 -->
+                <div class="article-section">
+                    <h2>下一課預告</h2>
+                    <p>
+                        前 4 堂課，你學了怎麼用 AI 寫文案、寫貼文、整理工作。
+                        下一課，最後一課，我們要把所有學到的東西整合起來：
+                        <strong>做出你自己的 AI 工作系統，一套真正適合你的流程。</strong>
+                    </p>
                 </div>
 
                 <!-- Navigation -->
